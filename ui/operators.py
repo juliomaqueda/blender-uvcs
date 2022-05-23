@@ -101,8 +101,6 @@ class PLASTIC_OT_checkin(Operator):
         else:
             common.show_error_log('Checkin failed', 'It was not possible to complete the checkin.', checkin_error_log)
 
-        client.refresh_status()
-
         return {'FINISHED'}
 
 class PLASTIC_OT_checkout(Operator):
@@ -118,8 +116,6 @@ class PLASTIC_OT_checkout(Operator):
         else:
             common.show_error_log('Checkout failed', 'It was not possible to complete the checkout.', checkout_error_log)
 
-        client.refresh_status()
-
         return {'FINISHED'}
 
 class PLASTIC_OT_undo_checkout(Operator):
@@ -134,8 +130,6 @@ class PLASTIC_OT_undo_checkout(Operator):
             common.show_info_message('Checkout reverted', ['Checkout undone successfully.'])
         else:
             common.show_error_log('Checkout undo failed', 'It was not possible to undo the checkout.', undo_checkout_error_log)
-
-        client.refresh_status()
 
         return {'FINISHED'}
 
@@ -154,8 +148,6 @@ class PLASTIC_OT_lock(Operator):
                 common.show_error_message('Lock failed', ['The current file doesn\'t meet the locking criteria.'])
         else:
             common.show_error_log('Checkout failed', 'It was not possible to checkout the file.', checkout_error_log)
-
-        client.refresh_status()
 
         return {'FINISHED'}
 

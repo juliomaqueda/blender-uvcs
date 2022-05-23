@@ -15,18 +15,18 @@ __STATUSES = {
 }
 
 __file_status = None
+__mount_point = None
 
 class FileStatus():
     repository = None
     server = None
     status = None
-    mount_point = None
 
 def get_server(): return __file_status.server if __file_status is not None else None
 
 def get_repository(): return __file_status.repository if __file_status is not None else None
 
-def get_mount_point(): return __file_status.mount_point if __file_status is not None else None
+def get_mount_point(): return __mount_point
 
 def has_changes_available(): return __file_status is not None and __file_status.status is not None
 
@@ -41,7 +41,8 @@ def get_status():
     return __STATUSES[file_status] if file_status in __STATUSES else 'Unknown (' + file_status + ')'
 
 def load_status():
-    global __file_status, __server, __repository, __status
+    global __file_status
+    __file_status = None
 
     command_result = command.file_status()
 
@@ -66,16 +67,23 @@ def load_status():
     return True
 
 def load_mount_point():
+    global __mount_point
+    __mount_point = None
+
     command_result = command.file_status_header()
 
     if command_result.success:
-        mount_point = command_result.output[0].split('@')[0]
-        __file_status.mount_point = mount_point
+        __mount_point = command_result.output[0].split('@')[0]
 
-        return mount_point
+        return __mount_point
 
     return None
 
-def clear_cache():
+def clear_status_cache():
     global __file_status
     __file_status = None
+
+def clear_mount_point_cache():
+    global __mount_point
+    __mount_point = None
+

@@ -31,8 +31,6 @@ def set_cm_location(path): location_operations.set_cm_location(path)
 def has_changes_available(): return status_operations.has_changes_available()
 
 def refresh_status():
-    status_operations.clear_cache()
-
     global __initialized, __connected
     __initialized = True
     __connected = status_operations.load_status()
@@ -40,11 +38,12 @@ def refresh_status():
 def refresh_info():
     refresh_status()
 
-    if __connected:
-        mount_point = status_operations.load_mount_point()
+    if not __connected: return
 
-        if mount_point.startswith('/'):
-            branch_operations.set_active_branch(mount_point)
+    mount_point = status_operations.load_mount_point()
+
+    if mount_point is not None and mount_point.startswith('/'):
+        branch_operations.set_active_branch(mount_point)
 
 def get_status():
     if not __connected:
@@ -64,13 +63,31 @@ def switch_to_branch(branch_name): return branch_operations.switch_to_branch(bra
 
 def create_branch(branch_name): return branch_operations.create_branch(branch_name)
 
-def checkin(comment): return checkin_operations.checkin(comment)
+def checkin(comment):
+    checkin_error_log = checkin_operations.checkin(comment)
+
+    if checkin_error_log is None:
+        refresh_status()
+
+    return checkin_error_log
 
 def is_checked_out(): return status_operations.is_checked_out()
 
-def checkout(): return checkout_operations.checkout()
+def checkout():
+    checkout_error_log = checkout_operations.checkout()
 
-def undo_checkout(): return checkout_operations.undo_checkout()
+    if checkout_error_log is None:
+        refresh_status()
+
+    return checkout_error_log
+
+def undo_checkout():
+    undo_checkout_error_log = checkout_operations.undo_checkout()
+
+    if undo_checkout_error_log is None:
+        refresh_status()
+
+    return undo_checkout_error_log
 
 def get_lock_owner(): return checkout_operations.get_lock_owner()
 
@@ -84,7 +101,8 @@ def clear_cache():
     global __initialized
     __initialized = False
 
-    status_operations.clear_cache()
+    status_operations.clear_status_cache()
+    status_operations.clear_mount_point_cache()
     branch_operations.clear_cache()
     checkout_operations.clear_cache()
     history_operations.clear_cache()
