@@ -1,7 +1,9 @@
 import bpy
 
+ADDON_NAME = 'blender-plasticscm'
+
 def get_addon_preferences(context):
-    return context.preferences.addons['plasticscm'].preferences
+    return context.preferences.addons[ADDON_NAME].preferences
 
 def get_plastic_context(context):
     return context.window_manager.plastic_context

@@ -183,7 +183,7 @@ class PLASTIC_OT_panel_popup(Operator):
         layout.separator()
 
         # Preferences
-        layout.operator('preferences.addon_show', text='Open add-on settings', icon='PREFERENCES', translate=False).module = 'plasticscm'
+        layout.operator('preferences.addon_show', text='Open add-on settings', icon='PREFERENCES', translate=False).module = common.ADDON_NAME
 
         layout.separator()
 

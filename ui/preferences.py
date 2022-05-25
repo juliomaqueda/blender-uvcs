@@ -3,6 +3,7 @@ from bpy.props import BoolProperty, IntProperty, StringProperty
 import os
 import platform
 
+from .. import common
 from ..plastic import client
 
 DEFAULT_CM_PATH_LINUX_MAC = '/usr/local/bin/cm'
@@ -10,7 +11,7 @@ DEFAULT_CM_PATH_WINDOWS_32_BIT = 'C:\Program Files (x86)\PlasticSCM5\client\cm.e
 DEFAULT_CM_PATH_WINDOWS_64_BIT = 'C:\Program Files\PlasticSCM5\client\cm.exe'
 
 class PlasticSCMPreferences(bpy.types.AddonPreferences):
-    bl_idname = 'plasticscm'
+    bl_idname = common.ADDON_NAME
 
     def __get_default_cm_path_by_os():
         # Windows
