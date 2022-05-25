@@ -70,7 +70,7 @@ def create_branch(branch_name):
     return __execute(['branch', 'create', branch_name])
 
 def checkin(comment):
-    params = ['checkin', '--all']
+    params = ['checkin', '--all', '--private']
 
     if comment is not None and comment != '':
         params.append('-c')
