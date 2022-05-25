@@ -71,6 +71,14 @@ def checkin(comment):
 
     return checkin_error_log
 
+def undo():
+    undo_error_log = checkin_operations.undo()
+
+    if undo_error_log is None:
+        refresh_status()
+
+    return undo_error_log
+
 def is_checked_out(): return status_operations.is_checked_out()
 
 def checkout():
@@ -80,14 +88,6 @@ def checkout():
         refresh_status()
 
     return checkout_error_log
-
-def undo_checkout():
-    undo_checkout_error_log = checkout_operations.undo_checkout()
-
-    if undo_checkout_error_log is None:
-        refresh_status()
-
-    return undo_checkout_error_log
 
 def get_lock_owner(): return checkout_operations.get_lock_owner()
 

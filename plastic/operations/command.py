@@ -83,7 +83,7 @@ def checkin(comment):
 def checkout():
     return __execute(['checkout', '--silent', bpy.data.filepath])
 
-def undo_checkout():
+def undo():
     return __execute(['undo', '--silent', bpy.data.filepath])
 
 def get_lock(field_separator):

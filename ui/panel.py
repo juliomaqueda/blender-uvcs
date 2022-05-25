@@ -85,11 +85,13 @@ class PLASTIC_OT_panel_popup(Operator):
             row.prop(panel_settings, 'is_child_branch', text='Is child branch?', translate=False)
             row.prop(panel_settings, 'switch_branch', text='Auto-switch', translate=False)
 
-        # Checkin
+        # Pending changes
         row = layout.row()
-        icon = 'DOWNARROW_HLT' if panel_settings.checkin_menu_active else 'RIGHTARROW'
-        row.prop(panel_settings, 'checkin_menu_active', text='Checkin', icon=icon, translate=False)
         row.enabled = client.has_changes_available()
+
+        changes_text = 'Pending changes' if client.has_changes_available() else 'No pending changes'
+        icon = 'DOWNARROW_HLT' if panel_settings.checkin_menu_active else 'RIGHTARROW'
+        row.prop(panel_settings, 'checkin_menu_active', text=changes_text, icon=icon, translate=False)
 
         if panel_settings.checkin_menu_active:
             comments = panel_settings.checkin_comments
@@ -114,8 +116,9 @@ class PLASTIC_OT_panel_popup(Operator):
                     row.operator('plastic.remove_comment_line', text='', icon='PANEL_CLOSE', translate=False).index = comment_index
 
             row = box.row()
-            row.alignment = 'LEFT'
-            row.operator('plastic.checkin', text='Submit checkin', icon_value=icons.get_icon('CREATE'), emboss=False, translate=False)
+
+            row.operator('plastic.checkin', text='Checkin', icon='EXPORT', translate=False)
+            row.operator('plastic.undo', text='Undo changes', icon='LOOP_BACK', translate=False)
 
         # Checkout
         row = layout.row()
@@ -137,10 +140,7 @@ class PLASTIC_OT_panel_popup(Operator):
 
             row = box.row()
 
-            if client.is_checked_out():
-                row.operator('plastic.undo_checkout', text='Undo checkout', translate=False)
-            else:
-                row.operator('plastic.checkout', text='Checkout', translate=False)
+            row.operator('plastic.checkout', text='Checkout' if not client.is_checked_out() else 'Checked-out', icon='IMPORT', translate=False)
 
             if client.get_lock_owner() is not None:
                 row.operator('plastic.unlock', text='Unlock', icon='UNLOCKED', translate=False)

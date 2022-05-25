@@ -108,6 +108,10 @@ class PLASTIC_OT_checkout(Operator):
     bl_label = 'Checkout'
     bl_description = 'Checkout the file'
 
+    @classmethod
+    def poll(cls, context):
+        return not client.is_checked_out()
+
     def execute(self, context):
         checkout_error_log = client.checkout()
 
@@ -118,18 +122,18 @@ class PLASTIC_OT_checkout(Operator):
 
         return {'FINISHED'}
 
-class PLASTIC_OT_undo_checkout(Operator):
-    bl_idname = 'plastic.undo_checkout'
-    bl_label = 'Undo checkout'
-    bl_description = 'Undo the current checkout'
+class PLASTIC_OT_undo(Operator):
+    bl_idname = 'plastic.undo'
+    bl_label = 'Undo changes'
+    bl_description = 'Undo the current changes'
 
     def execute(self, context):
-        undo_checkout_error_log = client.undo_checkout()
+        undo_error_log = client.undo()
 
-        if undo_checkout_error_log is None:
-            common.show_info_message('Checkout reverted', ['Checkout undone successfully.'])
+        if undo_error_log is None:
+            bpy.ops.wm.revert_mainfile()
         else:
-            common.show_error_log('Checkout undo failed', 'It was not possible to undo the checkout.', undo_checkout_error_log)
+            common.show_error_log('Undo failed', 'It was not possible to undo the changes.', undo_error_log)
 
         return {'FINISHED'}
 
@@ -223,8 +227,8 @@ def register():
     bpy.utils.register_class(PLASTIC_OT_add_comment_line)
     bpy.utils.register_class(PLASTIC_OT_remove_comment_line)
     bpy.utils.register_class(PLASTIC_OT_checkin)
+    bpy.utils.register_class(PLASTIC_OT_undo)
     bpy.utils.register_class(PLASTIC_OT_checkout)
-    bpy.utils.register_class(PLASTIC_OT_undo_checkout)
     bpy.utils.register_class(PLASTIC_OT_lock)
     bpy.utils.register_class(PLASTIC_OT_unlock)
     bpy.utils.register_class(PLASTIC_OT_reload_history)
@@ -236,8 +240,8 @@ def unregister():
     bpy.utils.unregister_class(PLASTIC_OT_add_comment_line)
     bpy.utils.unregister_class(PLASTIC_OT_remove_comment_line)
     bpy.utils.unregister_class(PLASTIC_OT_checkin)
+    bpy.utils.unregister_class(PLASTIC_OT_undo)
     bpy.utils.unregister_class(PLASTIC_OT_checkout)
-    bpy.utils.unregister_class(PLASTIC_OT_undo_checkout)
     bpy.utils.unregister_class(PLASTIC_OT_lock)
     bpy.utils.unregister_class(PLASTIC_OT_unlock)
     bpy.utils.unregister_class(PLASTIC_OT_reload_history)

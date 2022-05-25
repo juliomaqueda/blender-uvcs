@@ -28,14 +28,6 @@ def checkout():
 
     return None if command_result.success else command_result.output
 
-def undo_checkout():
-    command_result = command.undo_checkout()
-
-    if command_result.success:
-        __load_active_lock()
-
-    return None if command_result.success else command_result.output
-
 def get_lock_owner():
     global __lock_loaded
 
