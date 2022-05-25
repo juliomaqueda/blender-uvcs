@@ -63,11 +63,13 @@ Want to try new ideas without leaving the changes in local or messing up your wo
 
 Whenever you have local changes to push, the Checkin section is there to help. And even though multiline properties are still a missing feature in Blender, the add-on covers them with dynamic inputs.
 
+### Undo your changes
+
+Restore the remote version whenever you need it.
+
 ### Checkout files
 
 Checking out files is the way to tell the PlasticSCM server your intention to edit a file. While not that common for text files, it is a powerful feature for binaries, where merge tools lack utility.
-
-On the same page, you can undo your checkouts.
 
 ### Lock / unlock
 
