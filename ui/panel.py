@@ -36,7 +36,7 @@ class PLASTIC_OT_panel_popup(Operator):
         # File info
         row = layout.row()
         icon = 'DOWNARROW_HLT' if panel_settings.info_menu_active else 'RIGHTARROW'
-        row.prop(panel_settings, 'info_menu_active', text='File info', icon=icon, icon_only=False, translate=False)
+        row.prop(panel_settings, 'info_menu_active', text='File info', icon=icon, translate=False)
 
         if panel_settings.info_menu_active:
             box = layout.box()
@@ -59,7 +59,7 @@ class PLASTIC_OT_panel_popup(Operator):
         # Branching
         row = layout.row()
         icon = 'DOWNARROW_HLT' if panel_settings.branch_menu_active else 'RIGHTARROW'
-        row.prop(panel_settings, 'branch_menu_active', text='Branching', icon=icon, icon_only=False, translate=False)
+        row.prop(panel_settings, 'branch_menu_active', text='Branching', icon=icon, translate=False)
 
         if panel_settings.branch_menu_active:
             active_branch = client.get_active_branch()
@@ -88,7 +88,7 @@ class PLASTIC_OT_panel_popup(Operator):
         # Checkin
         row = layout.row()
         icon = 'DOWNARROW_HLT' if panel_settings.checkin_menu_active else 'RIGHTARROW'
-        row.prop(panel_settings, 'checkin_menu_active', text='Checkin', icon=icon, icon_only=False, translate=False)
+        row.prop(panel_settings, 'checkin_menu_active', text='Checkin', icon=icon, translate=False)
         row.enabled = client.has_changes_available()
 
         if panel_settings.checkin_menu_active:
@@ -120,7 +120,7 @@ class PLASTIC_OT_panel_popup(Operator):
         # Checkout
         row = layout.row()
         icon = 'DOWNARROW_HLT' if panel_settings.checkout_menu_active else 'RIGHTARROW'
-        row.prop(panel_settings, 'checkout_menu_active', text='Checkout / Locking', icon=icon, icon_only=False, translate=False)
+        row.prop(panel_settings, 'checkout_menu_active', text='Checkout / Locking', icon=icon, translate=False)
 
         if panel_settings.checkout_menu_active:
             box = layout.box()
@@ -150,7 +150,7 @@ class PLASTIC_OT_panel_popup(Operator):
         # History
         row = layout.row()
         icon = 'DOWNARROW_HLT' if panel_settings.history_menu_active else 'RIGHTARROW'
-        row.prop(panel_settings, 'history_menu_active', text='Show history', icon=icon, icon_only=False, translate=False)
+        row.prop(panel_settings, 'history_menu_active', text='Show history', icon=icon, translate=False)
 
         if panel_settings.history_menu_active:
             history = client.get_history()
