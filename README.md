@@ -27,6 +27,10 @@ Open Blender preferences and jump to the Add-ons section. You should see a butto
 >
 > <img src="documentation/enabling_add-on.png" width="500px"/>
 
+### Upgrade
+
+In case you have an older version of the add-on installed, you may want to deactivate and remove the old version from the Add-ons section. After that, it is strongly recommended to restart Blender before [installing the new version](#installation).
+
 
 ## Getting Started
 
@@ -83,7 +87,6 @@ In case you have different installations of PlasticSCM on your local machine, yo
 ## Roadmap
 
 There are many features I would like to include in the add-on, having as immediate elements:
-- Reverting all changes
 - Detecting moved files
 - Switching to changeset, label, or shelveset
 - Creating label
