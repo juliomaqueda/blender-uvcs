@@ -56,35 +56,6 @@ class PLASTIC_OT_panel_popup(Operator):
             row.alignment = 'LEFT'
             row.label(text='Mount point: ' + client.get_mount_point(), translate=False)
 
-        # Branching
-        row = layout.row()
-        icon = 'DOWNARROW_HLT' if panel_settings.branch_menu_active else 'RIGHTARROW'
-        row.prop(panel_settings, 'branch_menu_active', text='Branching', icon=icon, translate=False)
-
-        if panel_settings.branch_menu_active:
-            active_branch = client.get_active_branch()
-            panel_settings.branches = active_branch if active_branch is not None else '-'
-
-            box = layout.box()
-            row = box.row()
-
-            col = row.column()
-            col.alignment = 'LEFT'
-            col.label(text='Switch to', translate=False)
-            col.separator()
-            col.label(text='Create', translate=False)
-
-            col = row.column()
-            col.prop(panel_settings, 'branches', text='', translate=False)
-            col.separator()
-            row = col.row(align=True)
-            row.prop(panel_settings, 'new_branch_name', text='', translate=False)
-            row.operator('plastic.create_branch', text='', icon_value=icons.get_icon('CREATE'), translate=False)
-            col.separator()
-            row = col.row()
-            row.prop(panel_settings, 'is_child_branch', text='Is child branch?', translate=False)
-            row.prop(panel_settings, 'switch_branch', text='Auto-switch', translate=False)
-
         # Pending changes
         row = layout.row()
         row.enabled = client.has_changes_available()
@@ -147,6 +118,35 @@ class PLASTIC_OT_panel_popup(Operator):
             else:
                 row.operator('plastic.lock', text='Lock', icon='LOCKED', translate=False)
 
+        # Branching
+        row = layout.row()
+        icon = 'DOWNARROW_HLT' if panel_settings.branch_menu_active else 'RIGHTARROW'
+        row.prop(panel_settings, 'branch_menu_active', text='Branching', icon=icon, translate=False)
+
+        if panel_settings.branch_menu_active:
+            active_branch = client.get_active_branch()
+            panel_settings.branches = active_branch if active_branch is not None else '-'
+
+            box = layout.box()
+            row = box.row()
+
+            col = row.column()
+            col.alignment = 'LEFT'
+            col.label(text='Switch to', translate=False)
+            col.separator()
+            col.label(text='Create', translate=False)
+
+            col = row.column()
+            col.prop(panel_settings, 'branches', text='', translate=False)
+            col.separator()
+            row = col.row(align=True)
+            row.prop(panel_settings, 'new_branch_name', text='', translate=False)
+            row.operator('plastic.create_branch', text='', icon_value=icons.get_icon('CREATE'), translate=False)
+            col.separator()
+            row = col.row()
+            row.prop(panel_settings, 'is_child_branch', text='Is child branch?', translate=False)
+            row.prop(panel_settings, 'switch_branch', text='Auto-switch', translate=False)
+
         # History
         row = layout.row()
         icon = 'DOWNARROW_HLT' if panel_settings.history_menu_active else 'RIGHTARROW'
@@ -201,9 +201,9 @@ class PLASTIC_OT_panel_popup(Operator):
     def __reset_settings(self, context):
         panel_settings = common.get_plastic_context(context)
         panel_settings.info_menu_active = True
-        panel_settings.branch_menu_active = False
-        panel_settings.checkin_menu_active = False
+        panel_settings.checkin_menu_active = client.has_changes_available()
         panel_settings.checkout_menu_active = False
+        panel_settings.branch_menu_active = False
         panel_settings.history_menu_active = False
 
 
