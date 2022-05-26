@@ -144,7 +144,10 @@ class PLASTIC_OT_panel_popup(Operator):
             row.operator('plastic.create_branch', text='', icon_value=icons.get_icon('CREATE'), translate=False)
             col.separator()
             row = col.row()
-            row.prop(panel_settings, 'is_child_branch', text='Is child branch?', translate=False)
+
+            if active_branch is not None:
+                row.prop(panel_settings, 'is_child_branch', text='Is child branch?', translate=False)
+
             row.prop(panel_settings, 'switch_branch', text='Auto-switch', translate=False)
 
         # History
