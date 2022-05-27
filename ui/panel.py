@@ -12,10 +12,10 @@ class PLASTIC_OT_panel_popup(Operator):
     bl_description = 'Open the version control panel for PlasticSCM'
 
     def invoke(self, context, event):
-        self.__reset_settings(context)
-
         client.clear_cache()
         client.refresh_info()
+
+        self.__reset_settings(context)
 
         preferences = common.get_addon_preferences(context)
         wm = context.window_manager
