@@ -22,12 +22,8 @@ def __show_message(title, messages, icon='INFO'):
         layout = self.layout
 
         for message in messages:
-            message_lines = message.split('\n')
-
-            for message_line in message_lines:
-                row = layout.row()
-                row.alignment = 'LEFT'
-                row.label(text=message_line, translate=False)
+            for limited_line in __limit_line_chars(message):
+                layout.label(text=limited_line, translate=False)
 
     bpy.context.window_manager.popup_menu(draw, title=title, icon=icon)
 
@@ -37,9 +33,32 @@ def show_error_log(title, message, log):
         layout.label(text=message, translate=False)
 
         layout.label(text=' ', translate=False)
-        layout.label(text='Console output:', translate=False)
+        layout.label(text='PlasticSCM output:', translate=False)
 
         for log_line in log:
-            layout.label(text='> ' + log_line, translate=False)
+            for limited_line in __limit_line_chars(log_line):
+                layout.label(text='> ' + limited_line, translate=False)
 
     bpy.context.window_manager.popup_menu(draw, title=title, icon='CANCEL')
+
+def __limit_line_chars(line_text):
+    max_chars = 100
+
+    limited_lines = []
+
+    line_words = line_text.split(' ')
+
+    i = 0
+    line_text = ''
+
+    while i < len(line_words):
+        if len(line_text) < max_chars:
+            line_text += (line_words[i] + ' ')
+            i += 1
+        else:
+            limited_lines.append(line_text)
+            line_text = ''
+
+    limited_lines.append(line_text)
+
+    return limited_lines

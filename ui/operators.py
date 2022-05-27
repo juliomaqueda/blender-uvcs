@@ -190,7 +190,16 @@ class PLASTIC_OT_show_history(Operator):
         comments.append('Located on branch: ' + self.branch)
         comments.append('Changeset number: ' + self.changeset)
         comments.append(' ')
-        comments.append('Comment: ' + (self.comment if self.comment != '' else 'No comment'))
+
+        if self.comment == '':
+            comments.append('Comment: No comment')
+        else:
+            comment_lines = self.comment.split('\n')
+
+            comments.append('Comment: ' + comment_lines[0])
+
+            for extra_comment_line in comment_lines[1:]:
+                comments.append(extra_comment_line)
 
         common.show_info_message(title, comments)
 
