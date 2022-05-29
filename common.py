@@ -17,6 +17,14 @@ def show_warning_message(title, messages):
 def show_error_message(title, messages):
     __show_message(title, messages, 'CANCEL')
 
+def show_error_log(title, message, log):
+    messages = [message, ' ', 'PlasticSCM output:']
+
+    for log_line in log:
+        messages.append('> ' + log_line)
+
+    __show_message(title, messages, 'CANCEL')
+
 def __show_message(title, messages, icon='INFO'):
     def draw(self, context):
         layout = self.layout
@@ -26,20 +34,6 @@ def __show_message(title, messages, icon='INFO'):
                 layout.label(text=limited_line, translate=False)
 
     bpy.context.window_manager.popup_menu(draw, title=title, icon=icon)
-
-def show_error_log(title, message, log):
-    def draw(self, context):
-        layout = self.layout
-        layout.label(text=message, translate=False)
-
-        layout.label(text=' ', translate=False)
-        layout.label(text='PlasticSCM output:', translate=False)
-
-        for log_line in log:
-            for limited_line in __limit_line_chars(log_line):
-                layout.label(text='> ' + limited_line, translate=False)
-
-    bpy.context.window_manager.popup_menu(draw, title=title, icon='CANCEL')
 
 def __limit_line_chars(line_text):
     max_chars = 100
