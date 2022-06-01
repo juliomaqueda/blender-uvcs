@@ -89,9 +89,10 @@ In case you have different installations of PlasticSCM on your local machine, yo
 ## Roadmap
 
 There are many features I would like to include in the add-on, having as immediate elements:
+- Informing about incoming changes
+- Updating to latest version
 - Detecting moved files
-- Switching to changeset, label, or shelveset
-- Creating label
+- Creating labels
 - Showing extra info when the workspace has pending changes
 - Shelving
 
