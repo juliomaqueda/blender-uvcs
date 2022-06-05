@@ -61,10 +61,10 @@ class PLASTIC_OT_panel_popup(Operator):
         row.enabled = client.has_changes_available()
 
         changes_text = 'Pending changes' if client.has_changes_available() else 'No pending changes'
-        icon = 'DOWNARROW_HLT' if panel_settings.checkin_menu_active else 'RIGHTARROW'
-        row.prop(panel_settings, 'checkin_menu_active', text=changes_text, icon=icon, translate=False)
+        icon = 'DOWNARROW_HLT' if panel_settings.pending_changes_menu_active else 'RIGHTARROW'
+        row.prop(panel_settings, 'pending_changes_menu_active', text=changes_text, icon=icon, translate=False)
 
-        if panel_settings.checkin_menu_active:
+        if panel_settings.pending_changes_menu_active:
             comments = panel_settings.checkin_comments
 
             if len(comments) == 0:
@@ -204,7 +204,7 @@ class PLASTIC_OT_panel_popup(Operator):
     def __reset_settings(self, context):
         panel_settings = common.get_plastic_context(context)
         panel_settings.info_menu_active = True
-        panel_settings.checkin_menu_active = client.has_changes_available()
+        panel_settings.pending_changes_menu_active = client.has_changes_available()
         panel_settings.checkout_menu_active = False
         panel_settings.branch_menu_active = False
         panel_settings.history_menu_active = False

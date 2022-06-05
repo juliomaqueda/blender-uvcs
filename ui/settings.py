@@ -43,9 +43,9 @@ class PlasticPanelSettings(PropertyGroup):
         return None
 
     info_menu_active: BoolProperty(default=True)
-    branch_menu_active: BoolProperty()
-    checkin_menu_active: BoolProperty()
+    pending_changes_menu_active: BoolProperty()
     checkout_menu_active: BoolProperty()
+    branch_menu_active: BoolProperty()
     history_menu_active: BoolProperty()
     new_branch_name: StringProperty(
         name='Name of the new branch.'

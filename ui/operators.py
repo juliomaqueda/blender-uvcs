@@ -95,7 +95,7 @@ class PLASTIC_OT_checkin(Operator):
 
         if checkin_error_log is None:
             panel_settings.checkin_comments.clear()
-            panel_settings.checkin_menu_active = False
+            panel_settings.pending_changes_menu_active = False
 
             common.show_info_message('Checkin completed', ['Checkin completed successfully.'])
         else:
