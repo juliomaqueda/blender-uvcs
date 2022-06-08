@@ -86,8 +86,37 @@ def checkout():
 def undo():
     return __execute(['undo', '--silent', bpy.data.filepath])
 
+def get_changeset_branch(changeset):
+    return __execute([
+        'find',
+        'changeset',
+        'where changesetid = ' + str(changeset),
+        '--format={branch}',
+        '--nototal'
+    ])
+
+def get_incoming_changes(changeset, changeset_branch, format_separator):
+    incoming_changes_fields = ['{date}', '{owner}', '{branch}', '{changesetid}', '{comment}']
+
+    return __execute([
+        'find',
+        'changeset',
+        'where changesetid > ' + str(changeset) + ' and branch = "' + changeset_branch + '"',
+        '--format=' + format_separator.join(incoming_changes_fields) + '#__#',
+        '--nototal'
+    ], '#__#')
+
+def update():
+    return __execute(['update', '--silent'])
+
 def get_lock(field_separator):
-    return __execute(['lock', 'list', '--machinereadable', '--fieldseparator=' + field_separator, bpy.data.filepath])
+    return __execute([
+        'lock',
+        'list',
+        '--machinereadable',
+        '--fieldseparator=' + field_separator,
+        bpy.data.filepath
+    ])
 
 def unlock(guid):
     return __execute(['lock', 'unlock', guid])
@@ -95,4 +124,8 @@ def unlock(guid):
 def get_history(format_separator: str):
     history_fields = ['{date}', '{owner}', '{branch}', '{changesetid}', '{comment}']
 
-    return __execute(['history', '--format=' + format_separator.join(history_fields) + '#__#', bpy.data.filepath], '#__#')
+    return __execute([
+        'history',
+        '--format=' + format_separator.join(history_fields) + '#__#',
+        bpy.data.filepath
+    ], '#__#')

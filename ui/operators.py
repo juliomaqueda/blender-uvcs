@@ -103,6 +103,98 @@ class PLASTIC_OT_checkin(Operator):
 
         return {'FINISHED'}
 
+class PLASTIC_OT_undo(Operator):
+    bl_idname = 'plastic.undo'
+    bl_label = 'Undo changes'
+    bl_description = 'Undo the current changes'
+
+    @classmethod
+    def poll(cls, context):
+        return client.has_changes_available()
+
+    def execute(self, context):
+        undo_error_log = client.undo()
+
+        if undo_error_log is None:
+            bpy.ops.wm.revert_mainfile()
+        else:
+            common.show_error_log('Undo failed', 'It was not possible to undo the changes.', undo_error_log)
+
+        return {'FINISHED'}
+
+class PLASTIC_OT_changeset_details(Operator):
+    bl_idname = 'plastic.changeset_details'
+    bl_label = 'Show changeset details'
+    bl_description = 'Get detailed information about this changeset'
+
+    date: StringProperty()
+    owner: StringProperty()
+    branch: StringProperty()
+    changeset: StringProperty()
+    comment: StringProperty()
+
+    def execute(self, context):
+        title = 'Changeset detailed information'
+
+        comments = []
+        comments.append('Created: ' + self.date)
+        comments.append('Owner: ' + self.owner)
+        comments.append('Located on branch: ' + self.branch)
+        comments.append('Changeset number: ' + self.changeset)
+        comments.append(' ')
+
+        if self.comment == '':
+            comments.append('Comment: No comment')
+        else:
+            comment_lines = self.comment.split('\n')
+
+            comments.append('Comment: ' + comment_lines[0])
+
+            for extra_comment_line in comment_lines[1:]:
+                comments.append(extra_comment_line)
+
+        common.show_info_message(title, comments)
+
+        return {'FINISHED'}
+
+class PLASTIC_OT_update(Operator):
+    bl_idname = 'plastic.update'
+    bl_label = 'Update'
+    bl_description = 'Update to latest version'
+
+    @classmethod
+    def poll(cls, context):
+        return client.has_incoming_changes()
+
+    def execute(self, context):
+        update_error_log = client.update()
+
+        if update_error_log is None:
+            bpy.ops.wm.revert_mainfile()
+        else:
+            common.show_error_log('Update failed', 'It was not possible to update the file.', update_error_log)
+
+        return {'FINISHED'}
+
+class PLASTIC_OT_incoming_changes(Operator):
+    bl_idname = 'plastic.incoming_changes'
+    bl_label = 'View changes'
+    bl_description = 'View incoming changes'
+
+    @classmethod
+    def poll(cls, context):
+        return client.has_incoming_changes()
+
+    def execute(self, context):
+        update_error_log = client.update()
+
+        if update_error_log is None:
+            bpy.ops.wm.revert_mainfile()
+        else:
+            common.show_error_log('Update failed', 'It was not possible to update the file.', update_error_log)
+
+        return {'FINISHED'}
+
 class PLASTIC_OT_checkout(Operator):
     bl_idname = 'plastic.checkout'
     bl_label = 'Checkout'
@@ -119,21 +211,6 @@ class PLASTIC_OT_checkout(Operator):
             common.show_info_message('Checkout completed', ['Checkout completed successfully.'])
         else:
             common.show_error_log('Checkout failed', 'It was not possible to complete the checkout.', checkout_error_log)
-
-        return {'FINISHED'}
-
-class PLASTIC_OT_undo(Operator):
-    bl_idname = 'plastic.undo'
-    bl_label = 'Undo changes'
-    bl_description = 'Undo the current changes'
-
-    def execute(self, context):
-        undo_error_log = client.undo()
-
-        if undo_error_log is None:
-            bpy.ops.wm.revert_mainfile()
-        else:
-            common.show_error_log('Undo failed', 'It was not possible to undo the changes.', undo_error_log)
 
         return {'FINISHED'}
 
@@ -170,41 +247,6 @@ class PLASTIC_OT_unlock(Operator):
 
         return {'FINISHED'}
 
-class PLASTIC_OT_show_history(Operator):
-    bl_idname = 'plastic.show_history'
-    bl_label = 'Show history'
-    bl_description = 'Get detailed information about this history entry'
-
-    date: StringProperty()
-    owner: StringProperty()
-    branch: StringProperty()
-    changeset: StringProperty()
-    comment: StringProperty()
-
-    def execute(self, context):
-        title = 'History entry detailed information'
-
-        comments = []
-        comments.append('Created: ' + self.date)
-        comments.append('Owner: ' + self.owner)
-        comments.append('Located on branch: ' + self.branch)
-        comments.append('Changeset number: ' + self.changeset)
-        comments.append(' ')
-
-        if self.comment == '':
-            comments.append('Comment: No comment')
-        else:
-            comment_lines = self.comment.split('\n')
-
-            comments.append('Comment: ' + comment_lines[0])
-
-            for extra_comment_line in comment_lines[1:]:
-                comments.append(extra_comment_line)
-
-        common.show_info_message(title, comments)
-
-        return {'FINISHED'}
-
 class PLASTIC_OT_reload_history(Operator):
     bl_idname = 'plastic.reload_history'
     bl_label = 'Reload history'
@@ -237,11 +279,12 @@ def register():
     bpy.utils.register_class(PLASTIC_OT_remove_comment_line)
     bpy.utils.register_class(PLASTIC_OT_checkin)
     bpy.utils.register_class(PLASTIC_OT_undo)
+    bpy.utils.register_class(PLASTIC_OT_changeset_details)
+    bpy.utils.register_class(PLASTIC_OT_update)
     bpy.utils.register_class(PLASTIC_OT_checkout)
     bpy.utils.register_class(PLASTIC_OT_lock)
     bpy.utils.register_class(PLASTIC_OT_unlock)
     bpy.utils.register_class(PLASTIC_OT_reload_history)
-    bpy.utils.register_class(PLASTIC_OT_show_history)
     bpy.utils.register_class(PLASTIC_OT_open_unity_documentation)
 
 def unregister():
@@ -250,9 +293,10 @@ def unregister():
     bpy.utils.unregister_class(PLASTIC_OT_remove_comment_line)
     bpy.utils.unregister_class(PLASTIC_OT_checkin)
     bpy.utils.unregister_class(PLASTIC_OT_undo)
+    bpy.utils.unregister_class(PLASTIC_OT_changeset_details)
+    bpy.utils.unregister_class(PLASTIC_OT_update)
     bpy.utils.unregister_class(PLASTIC_OT_checkout)
     bpy.utils.unregister_class(PLASTIC_OT_lock)
     bpy.utils.unregister_class(PLASTIC_OT_unlock)
     bpy.utils.unregister_class(PLASTIC_OT_reload_history)
-    bpy.utils.unregister_class(PLASTIC_OT_show_history)
     bpy.utils.unregister_class(PLASTIC_OT_open_unity_documentation)

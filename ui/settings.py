@@ -44,6 +44,10 @@ class PlasticPanelSettings(PropertyGroup):
 
     info_menu_active: BoolProperty(default=True)
     pending_changes_menu_active: BoolProperty()
+    incoming_changes_menu_active: BoolProperty()
+    show_incoming_changes: BoolProperty(
+        description='Show all incoming changes'
+    )
     checkout_menu_active: BoolProperty()
     branch_menu_active: BoolProperty()
     history_menu_active: BoolProperty()

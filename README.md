@@ -77,20 +77,22 @@ Depending on the server configuration, your checkout operations may entail exclu
 
 This capability will allow you to easily lock and unlock files, while informing you of the current lock owner (if any).
 
+### Incoming changes and update
+
+Whenever new changesets are available in your branch, the plugin will inform you. In addition, you will be able to see all details about the incoming changes and update to the latest version.
+
 ### Walk through the history
 
 Explore when, why, and by whom a file was modified during its lifetime.
-
 
 ### Add-on preferences
 
 In case you have different installations of PlasticSCM on your local machine, you can configure the specific `cm` client to be used by the add-on.
 
+
 ## Roadmap
 
 There are many features I would like to include in the add-on, having as immediate elements:
-- Informing about incoming changes
-- Updating to latest version
 - Checkin changes to a new branch
 - Detecting moved files
 - Creating labels

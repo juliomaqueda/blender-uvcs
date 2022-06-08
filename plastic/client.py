@@ -7,6 +7,7 @@ from .operations import checkout as checkout_operations
 from .operations import history as history_operations
 from .operations import location as location_operations
 from .operations import status as status_operations
+from .operations import update as update_operations
 
 __initialized = False
 __connected = False
@@ -30,6 +31,8 @@ def set_cm_location(path): location_operations.set_cm_location(path)
 
 def has_changes_available(): return status_operations.has_changes_available()
 
+def has_incoming_changes(): return status_operations.has_incoming_changes()
+
 def refresh_status():
     global __initialized, __connected
     __initialized = True
@@ -40,7 +43,9 @@ def refresh_info():
 
     if not __connected: return
 
-    mount_point = status_operations.load_mount_point()
+    status_operations.load_mount_point()
+
+    mount_point = status_operations.get_mount_point()
 
     if mount_point is not None and mount_point.startswith('/'):
         branch_operations.set_active_branch(mount_point)
@@ -53,7 +58,16 @@ def get_status():
 
 def get_repository_spec(): return status_operations.get_repository() + '@' + status_operations.get_server()
 
-def get_mount_point(): return status_operations.get_mount_point()
+def get_mount_point():
+    mount_point = status_operations.get_mount_point()
+
+    if not mount_point.startswith('cs:'):
+        current_changeset = status_operations.get_current_changeset()
+
+        if current_changeset is not None:
+            mount_point += ' (cs:' + str(current_changeset) + ')'
+
+    return mount_point
 
 def get_active_branch(): return branch_operations.get_active_branch()
 
@@ -78,6 +92,16 @@ def undo():
         refresh_status()
 
     return undo_error_log
+
+def get_incoming_changes(): return update_operations.get_incoming_changes(status_operations.get_current_changeset())
+
+def update():
+    update_error_log = update_operations.update()
+
+    if update_error_log is None:
+        refresh_status()
+
+    return update_error_log
 
 def is_checked_out(): return status_operations.is_checked_out()
 
@@ -105,4 +129,5 @@ def clear_cache():
     status_operations.clear_mount_point_cache()
     branch_operations.clear_cache()
     checkout_operations.clear_cache()
+    update_operations.clear_cache()
     history_operations.clear_cache()

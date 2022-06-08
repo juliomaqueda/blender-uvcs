@@ -1,23 +1,10 @@
 from . import command
+from ..models import changeset
 
 __HISTORY_FORMAT_SEPARATOR = '#_#'
 
 __history_entries = None
 __history_loaded = False
-
-class HistoryEntry():
-    date = None
-    owner = None
-    branch = None
-    changeset = None
-    comment = None
-
-    def __init__(self, date, owner, branch, changeset, comment):
-        self.date = date
-        self.owner = owner
-        self.branch = branch
-        self.changeset = changeset
-        self.comment = comment
 
 def get_history():
     global __history_loaded
@@ -47,8 +34,11 @@ def __populate_history(history_output):
     for history_line in history_output:
         history_info = history_line.split(__HISTORY_FORMAT_SEPARATOR)
 
+        if len(history_info) == 4:
+            history_info.append('')
+
         if len(history_info) == 5:
-            __history_entries.append(HistoryEntry(
+            __history_entries.append(changeset.ChangesetEntry(
                 history_info[0],
                 history_info[1],
                 history_info[2],
