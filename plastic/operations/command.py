@@ -6,6 +6,8 @@ import subprocess
 __cm_command_path = None
 __cm_shell_process = None
 
+__NEW_LINE_SEPARATOR = '#__#'
+
 class CommandResult():
     success = False
     output = []
@@ -135,9 +137,9 @@ def get_incoming_changes(changeset, changeset_branch, format_separator):
         'find',
         'changeset',
         'where changesetid > ' + str(changeset) + ' and branch = "' + changeset_branch + '"',
-        '--format=' + format_separator.join(incoming_changes_fields) + '#__#',
+        '--format=' + format_separator.join(incoming_changes_fields) + __NEW_LINE_SEPARATOR,
         '--nototal'
-    ], '#__#')
+    ], __NEW_LINE_SEPARATOR)
 
 def update():
     return __execute(['update', '--silent'])
@@ -159,6 +161,6 @@ def get_history(format_separator: str):
 
     return __execute([
         'history',
-        '--format=' + format_separator.join(history_fields) + '#__#',
+        '--format=' + format_separator.join(history_fields) + __NEW_LINE_SEPARATOR,
         __quote(bpy.data.filepath)
-    ], '#__#')
+    ], __NEW_LINE_SEPARATOR)
