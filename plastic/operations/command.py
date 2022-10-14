@@ -1,8 +1,10 @@
 import bpy
 import os
+import re
 import subprocess
 
 __cm_command_path = None
+__cm_shell_process = None
 
 class CommandResult():
     success = False
@@ -13,22 +15,41 @@ class CommandResult():
         self.output = output
 
 def __execute(params, newline_separator = None):
-    command_arguments = [__cm_command_path]
-    command_arguments += params
-
     try:
-        p = subprocess.Popen(
-            command_arguments,
-            stdout = subprocess.PIPE,
-            stderr = subprocess.STDOUT,
-            cwd = __get_command_cwd()
-        )
+        if __cm_shell_process is None:
+            __initialize_plastic_shell()
 
-        output_data = p.communicate()[0]
+        cm_command = ' '.join(params) + "\n"
 
-        return CommandResult(p.returncode == 0, __format_output(output_data, newline_separator))
-    except BaseException:
+        __cm_shell_process.stdin.write(cm_command)
+
+        command_output = ''
+        command_return_code = 1
+
+        while True:
+            __cm_shell_process.stdin.flush()
+            output_line = __cm_shell_process.stdout.readline()
+
+            if 'CommandResult' in output_line:
+                command_return_code = __extract_command_result_code(output_line)
+                break
+
+            if output_line != '':
+                command_output += output_line
+
+        return CommandResult(command_return_code == 0, __format_output(command_output, newline_separator))
+    except BaseException as ex:
         return CommandResult(False, ['Couldn\'t execute command ' + __cm_command_path])
+
+def __initialize_plastic_shell():
+    global __cm_shell_process
+
+    __cm_shell_process = subprocess.Popen(
+        [__cm_command_path, 'shell'],
+        stdin = subprocess.PIPE,
+        stdout = subprocess.PIPE,
+        cwd = __get_command_cwd(),
+        encoding = 'utf8')
 
 def __get_command_cwd():
     command_cwd = None
@@ -38,27 +59,39 @@ def __get_command_cwd():
 
     return command_cwd
 
+def __extract_command_result_code(output_line):
+    match = re.search('CommandResult (\d)\n', output_line)
+
+    if match:
+        return int(match.group(1))
+
+    return None
+
 def __format_output(output, newline_separator):
     line_separator = newline_separator + '\n' if newline_separator is not None else '\n'
 
     return output \
-        .decode('utf-8') \
         .replace('\r', '') \
         .rstrip(line_separator) \
         .split(line_separator)
 
+def __quote(text):
+    return '"' + text + '"'
+
 def set_cm_location(path):
-    global __cm_command_path
+    global __cm_command_path, __cm_shell_process
+
     __cm_command_path = path
 
+    if __cm_shell_process is not None:
+        __cm_shell_process.terminate()
+        __cm_shell_process = None
+
 def file_status():
-    return __execute(['status', '--machinereadable', bpy.data.filepath])
+    return __execute(['status', '--machinereadable', __quote(bpy.data.filepath)])
 
 def file_status_header():
-    return __execute(['status', '--header', bpy.data.filepath])
-
-def get_relative_path():
-    return __execute(['fileinfo', '--format={RelativePath}', bpy.data.filepath])
+    return __execute(['status', '--header', __quote(bpy.data.filepath)])
 
 def get_branches():
     return __execute(['find', 'branches', '--format={name}', '--nototal'])
@@ -74,17 +107,17 @@ def checkin(comment):
 
     if comment is not None and comment != '':
         params.append('-c')
-        params.append(comment)
+        params.append(__quote(comment))
 
-    params.append(bpy.data.filepath)
+    params.append(__quote(bpy.data.filepath))
 
     return __execute(params)
 
 def checkout():
-    return __execute(['checkout', '--silent', bpy.data.filepath])
+    return __execute(['checkout', '--silent', __quote(bpy.data.filepath)])
 
 def undo():
-    return __execute(['undo', '--silent', bpy.data.filepath])
+    return __execute(['undo', '--silent', __quote(bpy.data.filepath)])
 
 def get_changeset_branch(changeset):
     return __execute([
@@ -115,7 +148,7 @@ def get_lock(field_separator):
         'list',
         '--machinereadable',
         '--fieldseparator=' + field_separator,
-        bpy.data.filepath
+        __quote(bpy.data.filepath)
     ])
 
 def unlock(guid):
@@ -127,5 +160,5 @@ def get_history(format_separator: str):
     return __execute([
         'history',
         '--format=' + format_separator.join(history_fields) + '#__#',
-        bpy.data.filepath
+        __quote(bpy.data.filepath)
     ], '#__#')

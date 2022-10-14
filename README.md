@@ -11,7 +11,7 @@ This add-on integrates the essentials of PlasticSCM into Blender, letting you ke
 
 ## Requirements
 
-* [Blender](https://www.blender.org/download/) >= 2.8.0
+* [Blender](https://www.blender.org/download/) >= 2.8.0 (last tested with 3.3.1 LTS)
 * [PlasticSCM](https://www.plasticscm.com/download)
 
 > ℹ️ &nbsp; The add-on will use your local PlasticSCM configuration automatically, no matter if you connect to a PlasticSCM on-premise server or if you have a [cloud subscription](https://unity.com/products/plastic-scm) _(**first 3 users and 5 GB are free**)_.

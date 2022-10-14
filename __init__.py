@@ -2,7 +2,7 @@ bl_info = {
     'name': 'PlasticSCM',
     'description': 'Integration with PlasticSCM version control system',
     'author': 'Julio Maqueda (@juliomaqueda)',
-    'version': (0, 1, 3),
+    'version': (0, 1, 4),
     'blender': (2, 80, 0),
     'location': 'Topbar / Sidebar -> PlasticSCM',
     'warning': '',
