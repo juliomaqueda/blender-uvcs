@@ -136,7 +136,7 @@ def get_incoming_changes(changeset, changeset_branch, format_separator):
     return __execute([
         'find',
         'changeset',
-        'where changesetid > ' + str(changeset) + ' and branch = "' + changeset_branch + '"',
+        'where changesetid > ' + str(changeset) + ' and branch = \'' + changeset_branch + '\'',
         '--format=' + format_separator.join(incoming_changes_fields) + __NEW_LINE_SEPARATOR,
         '--nototal'
     ], __NEW_LINE_SEPARATOR)
