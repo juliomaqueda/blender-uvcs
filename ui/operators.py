@@ -176,25 +176,6 @@ class PLASTIC_OT_update(Operator):
 
         return {'FINISHED'}
 
-class PLASTIC_OT_incoming_changes(Operator):
-    bl_idname = 'plastic.incoming_changes'
-    bl_label = 'View changes'
-    bl_description = 'View incoming changes'
-
-    @classmethod
-    def poll(cls, context):
-        return client.has_incoming_changes()
-
-    def execute(self, context):
-        update_error_log = client.update()
-
-        if update_error_log is None:
-            bpy.ops.wm.revert_mainfile()
-        else:
-            common.show_error_log('Update failed', 'It was not possible to update the file.', update_error_log)
-
-        return {'FINISHED'}
-
 class PLASTIC_OT_checkout(Operator):
     bl_idname = 'plastic.checkout'
     bl_label = 'Checkout'
@@ -207,9 +188,7 @@ class PLASTIC_OT_checkout(Operator):
     def execute(self, context):
         checkout_error_log = client.checkout()
 
-        if checkout_error_log is None:
-            common.show_info_message('Checkout completed', ['Checkout completed successfully.'])
-        else:
+        if checkout_error_log is not None:
             common.show_error_log('Checkout failed', 'It was not possible to complete the checkout.', checkout_error_log)
 
         return {'FINISHED'}
@@ -223,9 +202,7 @@ class PLASTIC_OT_lock(Operator):
         checkout_error_log = client.checkout()
 
         if checkout_error_log is None:
-            if client.get_lock_owner() is not None:
-                common.show_info_message('Lock completed', ['The file was successfully locked.'])
-            else:
+            if client.get_lock_owner() is None:
                 common.show_error_message('Lock failed', ['The current file doesn\'t meet the locking criteria.'])
         else:
             common.show_error_log('Checkout failed', 'It was not possible to checkout the file.', checkout_error_log)
@@ -240,9 +217,7 @@ class PLASTIC_OT_unlock(Operator):
     def execute(self, context):
         unlock_error_log = client.unlock()
 
-        if unlock_error_log is None:
-            common.show_info_message('Lock removed', ['Lock removed successfully.'])
-        else:
+        if unlock_error_log is not None:
             common.show_error_log('Lock removal failed', 'It was not possible to remove the lock.', unlock_error_log)
 
         return {'FINISHED'}
