@@ -38,12 +38,12 @@ def refresh_status():
     __initialized = True
     __connected = status_operations.load_status()
 
-def refresh_info():
+def refresh_file_info():
     refresh_status()
 
     if not __connected: return
 
-    status_operations.load_mount_point()
+    status_operations.load_file_info()
 
     mount_point = status_operations.get_mount_point()
 
@@ -82,7 +82,7 @@ def checkin(comment):
 
     if checkin_error_log is None:
         history_operations.clear_cache()
-        refresh_info()
+        refresh_file_info()
 
     return checkin_error_log
 
@@ -121,7 +121,6 @@ def clear_cache():
     __initialized = False
 
     status_operations.clear_status_cache()
-    status_operations.clear_mount_point_cache()
     branch_operations.clear_cache()
     checkout_operations.clear_cache()
     update_operations.clear_cache()

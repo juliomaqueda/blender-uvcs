@@ -18,7 +18,7 @@ class PLASTIC_OT_panel_popup(Operator):
 
     def invoke(self, context, event):
         client.clear_cache()
-        client.refresh_info()
+        client.refresh_file_info()
 
         self.__reset_settings(context)
 
