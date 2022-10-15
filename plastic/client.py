@@ -82,7 +82,7 @@ def checkin(comment):
 
     if checkin_error_log is None:
         history_operations.clear_cache()
-        refresh_status()
+        refresh_info()
 
     return checkin_error_log
 
