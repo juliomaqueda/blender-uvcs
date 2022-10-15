@@ -81,6 +81,7 @@ def checkin(comment):
     checkin_error_log = checkin_operations.checkin(comment)
 
     if checkin_error_log is None:
+        history_operations.clear_cache()
         refresh_status()
 
     return checkin_error_log
