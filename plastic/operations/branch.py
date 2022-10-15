@@ -17,7 +17,7 @@ def get_branches():
         __branches_loaded = True
         __branches = []
 
-        command_result = command.get_branches()
+        command_result = command.execute(['find', 'branches', '--format={name}', '--nototal'])
 
         if command_result.success:
             __branches = command_result.output
@@ -25,7 +25,7 @@ def get_branches():
     return __branches
 
 def switch_to_branch(branch_name):
-    command_result = command.switch_to_branch(branch_name)
+    command_result = command.execute(['switch', branch_name])
 
     if command_result.success:
         global __active_branch
@@ -36,7 +36,7 @@ def switch_to_branch(branch_name):
     return command_result.output
 
 def create_branch(branch_name):
-    command_result = command.create_branch(branch_name)
+    command_result = command.execute(['branch', 'create', branch_name])
 
     if command_result.success:
         __branches.append(branch_name)

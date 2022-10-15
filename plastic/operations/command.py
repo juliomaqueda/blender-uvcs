@@ -6,8 +6,6 @@ import subprocess
 __cm_command_path = None
 __cm_shell_process = None
 
-__NEW_LINE_SEPARATOR = '#__#'
-
 class CommandResult():
     success = False
     output = []
@@ -16,7 +14,7 @@ class CommandResult():
         self.success = succeded
         self.output = output
 
-def __execute(params, newline_separator = None):
+def execute(params, newline_separator = None):
     try:
         if __cm_shell_process is None:
             __initialize_plastic_shell()
@@ -77,9 +75,6 @@ def __format_output(output, newline_separator):
         .rstrip(line_separator) \
         .split(line_separator)
 
-def __quote(text):
-    return '"' + text + '"'
-
 def set_cm_location(path):
     global __cm_command_path, __cm_shell_process
 
@@ -88,79 +83,3 @@ def set_cm_location(path):
     if __cm_shell_process is not None:
         __cm_shell_process.terminate()
         __cm_shell_process = None
-
-def file_status():
-    return __execute(['status', '--machinereadable', __quote(bpy.data.filepath)])
-
-def file_status_header():
-    return __execute(['status', '--header', __quote(bpy.data.filepath)])
-
-def get_branches():
-    return __execute(['find', 'branches', '--format={name}', '--nototal'])
-
-def switch_to_branch(branch_name):
-    return __execute(['switch', branch_name])
-
-def create_branch(branch_name):
-    return __execute(['branch', 'create', branch_name])
-
-def checkin(comment):
-    params = ['checkin', '--all', '--private']
-
-    if comment is not None and comment != '':
-        params.append('-c')
-        params.append(__quote(comment))
-
-    params.append(__quote(bpy.data.filepath))
-
-    return __execute(params)
-
-def checkout():
-    return __execute(['checkout', '--silent', __quote(bpy.data.filepath)])
-
-def undo():
-    return __execute(['undo', '--silent', __quote(bpy.data.filepath)])
-
-def get_changeset_branch(changeset):
-    return __execute([
-        'find',
-        'changeset',
-        'where changesetid = ' + str(changeset),
-        '--format={branch}',
-        '--nototal'
-    ])
-
-def get_incoming_changes(changeset, changeset_branch, format_separator):
-    incoming_changes_fields = ['{date}', '{owner}', '{branch}', '{changesetid}', '{comment}']
-
-    return __execute([
-        'find',
-        'changeset',
-        'where changesetid > ' + str(changeset) + ' and branch = \'' + changeset_branch + '\'',
-        '--format=' + format_separator.join(incoming_changes_fields) + __NEW_LINE_SEPARATOR,
-        '--nototal'
-    ], __NEW_LINE_SEPARATOR)
-
-def update():
-    return __execute(['update', '--silent'])
-
-def get_lock(field_separator):
-    return __execute([
-        'lock',
-        'list',
-        '--machinereadable',
-        '--fieldseparator=' + field_separator,
-        __quote(bpy.data.filepath)
-    ])
-
-def unlock(guid):
-    return __execute(['lock', 'unlock', guid])
-
-def get_history(format_separator: str):
-    history_fields = ['{date}', '{owner}', '{branch}', '{changesetid}', '{comment}']
-
-    return __execute([
-        'history',
-        '--format=' + format_separator.join(history_fields) + __NEW_LINE_SEPARATOR,
-        __quote(bpy.data.filepath)
-    ], __NEW_LINE_SEPARATOR)

@@ -1,6 +1,8 @@
+import bpy
 import re
 
 from . import command
+from ... import common
 
 __STATUSES = {
     'AD': 'Added',
@@ -55,7 +57,7 @@ def load_status():
     global __file_status
     __file_status = None
 
-    command_result = command.file_status()
+    command_result = command.execute(['status', '--machinereadable', common.quote(bpy.data.filepath)])
 
     if not command_result.success:
         return False
@@ -89,7 +91,7 @@ def load_mount_point():
     global __mount_point
     __mount_point = None
 
-    command_result = command.file_status_header()
+    command_result = command.execute(['status', '--header', common.quote(bpy.data.filepath)])
 
     if command_result.success:
         header_line = command_result.output[0]

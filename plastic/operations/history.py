@@ -1,7 +1,11 @@
+import bpy
+
 from . import command
 from ..models import changeset
+from ... import common
 
 __HISTORY_FORMAT_SEPARATOR = '#_#'
+__NEW_LINE_SEPARATOR = '#__#'
 
 __history_entries = None
 __history_loaded = False
@@ -19,7 +23,13 @@ def load_history():
     global __history_entries
     __history_entries = None
 
-    command_result = command.get_history(__HISTORY_FORMAT_SEPARATOR)
+    history_fields = ['{date}', '{owner}', '{branch}', '{changesetid}', '{comment}']
+
+    command_result = command.execute([
+        'history',
+        '--format=' + __HISTORY_FORMAT_SEPARATOR.join(history_fields) + __NEW_LINE_SEPARATOR,
+        common.quote(bpy.data.filepath)
+    ], __NEW_LINE_SEPARATOR)
 
     if command_result.success:
         __history_entries = []

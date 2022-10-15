@@ -1,4 +1,7 @@
+import bpy
+
 from . import command
+from ... import common
 
 __LOCK_FIELD_SEPARATOR = ','
 
@@ -11,7 +14,13 @@ def __load_active_lock():
     __lock_owner = None
     __locked_file_guid = None
 
-    lock_result = command.get_lock(__LOCK_FIELD_SEPARATOR)
+    lock_result = command.execute([
+        'lock',
+        'list',
+        '--machinereadable',
+        '--fieldseparator=' + __LOCK_FIELD_SEPARATOR,
+        common.quote(bpy.data.filepath)
+    ])
 
     if lock_result.success and lock_result.output[0] != '':
         lock_info = lock_result.output[0].split(__LOCK_FIELD_SEPARATOR)
@@ -21,7 +30,7 @@ def __load_active_lock():
             __locked_file_guid = lock_info[0]
 
 def checkout():
-    command_result = command.checkout()
+    command_result = command.execute(['checkout', '--silent', common.quote(bpy.data.filepath)])
 
     if command_result.success:
         __load_active_lock()
@@ -38,7 +47,7 @@ def get_lock_owner():
     return __lock_owner
 
 def unlock():
-    command_result = command.unlock(__locked_file_guid)
+    command_result = command.execute(['lock', 'unlock', __locked_file_guid])
 
     if command_result.success:
         clear_cache()

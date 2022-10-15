@@ -2,12 +2,13 @@ from . import command
 from ..models import changeset
 
 __CHANGES_FORMAT_SEPARATOR = '#_#'
+__NEW_LINE_SEPARATOR = '#__#'
 
 __incoming_changes_entries = None
 __incoming_changes_loaded = False
 
 def update():
-    command_result = command.update()
+    command_result = command.execute(['update', '--silent'])
 
     return None if command_result.success else command_result.output
 
@@ -24,12 +25,12 @@ def load_incoming_changes(changeset):
     global __incoming_changes_entries
     __incoming_changes_entries = None
 
-    changeset_branch_result = command.get_changeset_branch(changeset)
+    changeset_branch_result = __get_changeset_branch(changeset)
 
     if changeset_branch_result.success:
         changeset_branch = changeset_branch_result.output[0]
 
-        incoming_changes_result = command.get_incoming_changes(changeset, changeset_branch, __CHANGES_FORMAT_SEPARATOR)
+        incoming_changes_result = __get_incoming_changes(changeset, changeset_branch)
 
         if incoming_changes_result.success:
             __incoming_changes_entries = []
@@ -41,6 +42,26 @@ def load_incoming_changes(changeset):
         return None if incoming_changes_result.success else incoming_changes_result.output
 
     return None if changeset_branch_result.success else changeset_branch_result.output
+
+def __get_changeset_branch(changeset):
+    return command.execute([
+        'find',
+        'changeset',
+        'where changesetid = ' + str(changeset),
+        '--format={branch}',
+        '--nototal'
+    ])
+
+def __get_incoming_changes(changeset, changeset_branch):
+    incoming_changes_fields = ['{date}', '{owner}', '{branch}', '{changesetid}', '{comment}']
+
+    return command.execute([
+        'find',
+        'changeset',
+        'where changesetid > ' + str(changeset) + ' and branch = \'' + changeset_branch + '\'',
+        '--format=' + __CHANGES_FORMAT_SEPARATOR.join(incoming_changes_fields) + __NEW_LINE_SEPARATOR,
+        '--nototal'
+    ], __NEW_LINE_SEPARATOR)
 
 def __populate_incoming_changes(incoming_changes_output):
     for incoming_changes_line in incoming_changes_output:

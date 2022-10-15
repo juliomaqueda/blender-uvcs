@@ -56,3 +56,6 @@ def __limit_line_chars(line_text):
     limited_lines.append(line_text)
 
     return limited_lines
+
+def quote(text):
+    return '"' + text + '"'
