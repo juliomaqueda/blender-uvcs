@@ -96,13 +96,7 @@ def undo():
 
 def get_incoming_changes(): return update_operations.get_incoming_changes(status_operations.get_current_changeset())
 
-def update():
-    update_error_log = update_operations.update()
-
-    if update_error_log is None:
-        refresh_status()
-
-    return update_error_log
+def update(): return update_operations.update()
 
 def is_checked_out(): return status_operations.is_checked_out()
 
