@@ -96,12 +96,9 @@ def __extract_server_from_header(header_line):
     return item_info.split('@')[2]
 
 def __extract_changeset_from_header(header_line):
-    found_changeset = re.search('cs:(\d+)', header_line)
+    match = re.search('cs:(\d+)', header_line)
 
-    if found_changeset is not None and len(found_changeset.groups()) >= 1:
-        return int(found_changeset.group(1))
-
-    return None
+    return int(match.group(1)) if match else None
 
 def __extract_head_from_header(header_line):
     found_head = re.search('head:(\d+)', header_line)

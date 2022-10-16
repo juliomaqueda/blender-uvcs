@@ -28,10 +28,14 @@ def execute(params, newline_separator = None):
 
         while True:
             __cm_shell_process.stdin.flush()
-            output_line = __cm_shell_process.stdout.readline()
 
-            if 'CommandResult' in output_line:
-                command_return_code = __extract_command_result_code(output_line)
+            output_line = __cm_shell_process.stdout.readline() \
+                .replace('\r', '')
+
+            result_code = __extract_command_result_code(output_line)
+
+            if result_code is not None:
+                command_return_code = result_code
                 break
 
             if output_line != '':
@@ -60,18 +64,14 @@ def __get_command_cwd():
     return command_cwd
 
 def __extract_command_result_code(output_line):
-    match = re.search('CommandResult (\d)\n', output_line)
+    match = re.search('^CommandResult (\d)\n$', output_line)
 
-    if match:
-        return int(match.group(1))
-
-    return None
+    return int(match.group(1)) if match else None
 
 def __format_output(output, newline_separator):
     line_separator = newline_separator + '\n' if newline_separator is not None else '\n'
 
     return output \
-        .replace('\r', '') \
         .rstrip(line_separator) \
         .split(line_separator)
 
