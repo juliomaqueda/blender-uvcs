@@ -49,7 +49,7 @@ def __initialize_plastic_shell():
     global __cm_shell_process
 
     __cm_shell_process = subprocess.Popen(
-        [__cm_command_path, 'shell'],
+        [__cm_command_path, 'shell', '--encoding=UTF-8'],
         stdin = subprocess.PIPE,
         stdout = subprocess.PIPE,
         cwd = __get_command_cwd(),
