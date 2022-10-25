@@ -56,6 +56,8 @@ def get_status():
 
     return status_operations.get_status() if status_operations.has_changes_available() else 'No changes'
 
+def is_private(): return status_operations.is_private()
+
 def get_repository_spec(): return status_operations.get_repository() + '@' + status_operations.get_server()
 
 def get_mount_point():
@@ -70,6 +72,14 @@ def get_mount_point():
     return mount_point
 
 def get_active_branch(): return branch_operations.get_active_branch()
+
+def add():
+    add_error_log = checkout_operations.add()
+
+    if add_error_log is None:
+        refresh_file_info()
+
+    return add_error_log
 
 def get_branches(): return branch_operations.get_branches()
 
