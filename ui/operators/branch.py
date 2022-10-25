@@ -32,9 +32,7 @@ class PLASTIC_OT_create_branch(Operator):
                 switch_error_log = client.switch_to_branch(branch_name)
 
                 if switch_error_log is None:
-                    if os.path.exists(bpy.data.filepath):
-                        bpy.ops.wm.revert_mainfile()
-                    else:
+                    if not os.path.exists(bpy.data.filepath):
                         common.show_warning_message('Branch switched', ['The workspace was switched to a branch where the current file doesn\'t exist'])
                 else:
                     common.show_error_log('Branch switch failed', 'Although the new branch was created successfully, it was not possible to switch to it.', switch_error_log)
