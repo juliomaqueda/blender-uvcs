@@ -18,6 +18,9 @@ def draw(layout, panel_settings):
         row.alignment = 'LEFT'
         row.label(text='Status: ' + client.get_status(), translate=False)
 
+        if client.is_private():
+            row.operator('plastic.add', text='Add', icon='ADD', translate=False)
+
         row = box.row()
         row.alignment = 'LEFT'
         row.label(text='Repository: ' + client.get_repository_spec(), translate=False)

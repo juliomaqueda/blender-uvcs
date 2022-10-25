@@ -1,6 +1,7 @@
-from . import branch, checkin, checkout, documentation, history, lock, undo, update
+from . import add, branch, checkin, checkout, documentation, history, lock, undo, update
 
 def register():
+    add.register()
     branch.register()
     checkin.register()
     checkout.register()
@@ -11,6 +12,7 @@ def register():
     update.register()
 
 def unregister():
+    add.unregister()
     branch.unregister()
     checkin.unregister()
     checkout.unregister()
