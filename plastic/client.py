@@ -73,7 +73,13 @@ def get_active_branch(): return branch_operations.get_active_branch()
 
 def get_branches(): return branch_operations.get_branches()
 
-def switch_to_branch(branch_name): return branch_operations.switch_to_branch(branch_name)
+def switch_to_branch(branch_name):
+    switch_error_log = branch_operations.switch_to_branch(branch_name)
+
+    if switch_error_log is None:
+        refresh_file_info()
+
+    return switch_error_log
 
 def create_branch(branch_name): return branch_operations.create_branch(branch_name)
 
