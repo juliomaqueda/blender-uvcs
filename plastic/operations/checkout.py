@@ -29,6 +29,11 @@ def __load_active_lock():
             __lock_owner = lock_info[1]
             __locked_file_guid = lock_info[0]
 
+def add():
+    command_result = command.execute(['add', '--silent', common.quote(bpy.data.filepath)])
+
+    return None if command_result.success else command_result.output
+
 def checkout():
     command_result = command.execute(['checkout', '--silent', common.quote(bpy.data.filepath)])
 

@@ -51,13 +51,9 @@ Quick glance at the add-on panel and you will be instantly informed about...
 - Repository
 - Server
 
-### Switch between branches
+### Add private files to source control
 
-Point your local workspace to a different branch at any time.
-
-### Create new branches
-
-Want to try new ideas without leaving the changes in local or messing up your working branch? Create new branches and keep your work save. This feature also allows you to create **child branches** and **switch** to the new branches automatically.
+Decide _when_ you want your new (private) files to be under source control.
 
 ### Checkin your changes
 
@@ -66,6 +62,10 @@ Whenever you have local changes to push, the Checkin section is there to help. A
 ### Undo your changes
 
 Restore the remote version whenever you need it.
+
+### Incoming changes and update
+
+Whenever new changesets are available in your branch, the plugin will inform you. In addition, you will be able to see all details about the incoming changes and update to the latest version.
 
 ### Checkout files
 
@@ -77,9 +77,13 @@ Depending on the server configuration, your checkout operations may entail exclu
 
 This capability will allow you to easily lock and unlock files, while informing you of the current lock owner (if any).
 
-### Incoming changes and update
+### Create new branches
 
-Whenever new changesets are available in your branch, the plugin will inform you. In addition, you will be able to see all details about the incoming changes and update to the latest version.
+Want to try new ideas without leaving the changes in local or messing up your working branch? Create new branches and keep your work save. This feature also allows you to create **child branches** and **switch** to the new branches automatically.
+
+### Switch between branches
+
+Point your local workspace to a different branch at any time.
 
 ### Walk through the history
 

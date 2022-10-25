@@ -39,6 +39,8 @@ def has_changes_available(): return __file_info.status is not None
 
 def is_checked_out(): return __file_info.status == 'CO'
 
+def is_private(): return __file_info.status == 'PR'
+
 def get_mount_point(): return __file_info.mount_point.name
 
 def get_current_changeset(): return __file_info.mount_point.changeset
