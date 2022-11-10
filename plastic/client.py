@@ -58,6 +58,8 @@ def get_status():
 
 def is_private(): return status_operations.is_private()
 
+def is_local_file(): return status_operations.is_local_file()
+
 def get_repository_spec(): return status_operations.get_repository() + '@' + status_operations.get_server()
 
 def get_mount_point():

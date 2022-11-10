@@ -27,6 +27,7 @@ class FileInfo():
     repository = None
     server = None
     status = None
+    is_local = True
     mount_point = MountPoint()
 
 __file_info = FileInfo()
@@ -40,6 +41,8 @@ def has_changes_available(): return __file_info.status is not None
 def is_checked_out(): return __file_info.status == 'CO'
 
 def is_private(): return __file_info.status == 'PR'
+
+def is_local_file(): return __file_info.is_local
 
 def get_mount_point(): return __file_info.mount_point.name
 
@@ -75,10 +78,10 @@ def load_file_info():
     global __file_info
     __file_info.mount_point = MountPoint()
 
-    command_result = command.execute(['status', '--header', common.quote(bpy.data.filepath)])
+    status_command_result = command.execute(['status', '--header', common.quote(bpy.data.filepath)])
 
-    if command_result.success:
-        header_line = command_result.output[0]
+    if status_command_result.success:
+        header_line = status_command_result.output[0]
 
         __file_info.repository = __extract_repository_from_header(header_line)
         __file_info.server = __extract_server_from_header(header_line)
@@ -86,6 +89,12 @@ def load_file_info():
         __file_info.mount_point.name = header_line.split('@')[0]
         __file_info.mount_point.changeset = __extract_changeset_from_header(header_line)
         __file_info.mount_point.head = __extract_head_from_header(header_line)
+
+    fileinfo_command_result = command.execute(['fileinfo', '--format={RevisionChangeset}', common.quote(bpy.data.filepath)])
+
+    if fileinfo_command_result.success:
+        revision_changeset = fileinfo_command_result.output[0]
+        __file_info.is_local = revision_changeset == '-1'
 
 def __extract_repository_from_header(header_line):
     item_info = header_line.split(' ')[0]

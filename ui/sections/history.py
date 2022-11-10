@@ -3,6 +3,8 @@ from ...plastic import client
 
 def draw(layout, panel_settings):
     row = layout.row()
+    row.enabled = not client.is_local_file()
+
     icon = 'DOWNARROW_HLT' if panel_settings.history_menu_active else 'RIGHTARROW'
     row.prop(panel_settings, 'history_menu_active', text='Show history', icon=icon, translate=False)
 
