@@ -124,4 +124,4 @@ If you like this project and want to support my work, feel free to [buy me a cof
 
 ## Copyright
 
-Copyright (c) 2022 [Julio Maqueda](https://github.com/juliomaqueda)
+Copyright (c) 2023 [Julio Maqueda](https://github.com/juliomaqueda)
