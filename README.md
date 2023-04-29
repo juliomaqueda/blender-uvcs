@@ -1,25 +1,25 @@
-# PlasticSCM add-on for Blender
+# Unity Version Control add-on for Blender
 
-Powered by Unity, [PlasticSCM](https://unity.com/products/plastic-scm) is a top-notch [version control system](https://unity.com/solutions/version-control-systems) specially designed for game developers and artists.
+Powered by Unity, [Version Control](https://unity.com/solutions/version-control) is a top-notch [version control system](https://unity.com/solutions/what-is-version-control) specially designed for game developers and artists.
 
-This add-on integrates the essentials of PlasticSCM into Blender, letting you keep track of your changes without leaving your workspace.
+This add-on integrates the essentials of Unity Version Control into Blender, letting you keep track of your changes without leaving your workspace.
 
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
-[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/juliomaqueda/blender-plasticscm/)
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/juliomaqueda/blender-uvcs/)
 [![](documentation/buy_coffee_badge.svg)](https://ko-fi.com/juliomaqueda)
 
 
 ## Requirements
 
 * [Blender](https://www.blender.org/download/) >= 2.8.0 (last tested with 3.3.1 LTS)
-* [PlasticSCM](https://www.plasticscm.com/download)
+* [Unity Version Control](https://www.plasticscm.com/download)
 
-> ℹ️ &nbsp; The add-on will use your local PlasticSCM configuration automatically, no matter if you connect to a PlasticSCM on-premise server or if you have a [cloud subscription](https://unity.com/products/plastic-scm) _(**first 3 users and 5 GB are free**)_.
+> ℹ️ &nbsp; The add-on will use your local configuration of Unity Version Control automatically, no matter if you connect to an on-premise server or if you have a [cloud subscription](https://service-store.unity.com/order) _(**first 3 seats and 5 GB are free**)_.
 
 
 ## Installation
 
-You can find the latest version of the add-on in the [releases](https://github.com/juliomaqueda/blender-plasticscm/releases) page.
+You can find the latest version of the add-on in the [releases](https://github.com/juliomaqueda/blender-uvcs/releases) page.
 
 Open Blender preferences and jump to the Add-ons section. You should see a button reading `Install...` in the upper right corner. Simply choose the zip file you downloaded and click `Install Add-on`.
 
@@ -34,7 +34,7 @@ In case you have an older version of the add-on installed, you may want to deact
 
 ## Getting Started
 
-When the [blender-plasticscm](https://github.com/juliomaqueda/blender-plasticscm) add-on is enabled, it will automatically detect if the current file belongs to a PlasticSCM workspace. If so, a new icon in the toolbar <img src="documentation/icon_plastic.png" width="14px" /> will show up to access PlasticSCM [features](#features).
+When the [blender-uvcs](https://github.com/juliomaqueda/blender-uvcs) add-on is enabled, it will automatically detect if the current file belongs to a Unity Version Control workspace. If so, a new icon in the toolbar <img src="documentation/icon_devops.png" width="14px" /> will show up to access Unity Version Control [features](#features).
 
 A special effort has been made to achieve user friendly interfaces. You will see tooltips around for almost all components, as well as information messages for operations. In case an invalid operation is attempted, you will be prompted with the process log to facilitate triage.
 
@@ -69,7 +69,7 @@ Whenever new changesets are available in your branch, the plugin will inform you
 
 ### Checkout files
 
-Checking out files is the way to tell the PlasticSCM server your intention to edit a file. While not that common for text files, it is a powerful feature for binaries, where merge tools lack utility.
+Checking out files is the way to tell the Unity Version Control server your intention to edit a file. While not that common for text files, it is a powerful feature for binaries, where merge tools lack utility.
 
 ### Lock / unlock
 
@@ -91,7 +91,7 @@ Explore when, why, and by whom a file was modified during its lifetime.
 
 ### Add-on preferences
 
-In case you have different installations of PlasticSCM on your local machine, you can configure the specific `cm` client to be used by the add-on.
+In case you have different installations of Unity Version Control on your local machine, you can configure the specific `cm` client to be used by the add-on.
 
 
 ## Roadmap
@@ -106,7 +106,7 @@ There are many features I would like to include in the add-on, having as immedia
 
 ## Changelog
 
-Changes are tracked in the [releases](https://github.com/juliomaqueda/blender-plasticscm/releases) page.
+Changes are tracked in the [releases](https://github.com/juliomaqueda/blender-uvcs/releases) page.
 
 
 ## Contributing
@@ -115,7 +115,7 @@ Changes are tracked in the [releases](https://github.com/juliomaqueda/blender-pl
 
 I do not consider myself an expert in either Blender or python, so I will appreciate your feedback.
 
-Just rise a ticket [here](https://github.com/juliomaqueda/blender-plasticscm/issues)!
+Just rise a ticket [here](https://github.com/juliomaqueda/blender-uvcs/issues)!
 
 ### Support
 

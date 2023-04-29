@@ -3,10 +3,10 @@ from bpy.types import Operator
 from bpy.props import IntProperty
 
 from ... import common
-from ...plastic import client
+from ...uvcs import client
 
-class PLASTIC_OT_checkin(Operator):
-    bl_idname = 'plastic.checkin'
+class UVCS_OT_checkin(Operator):
+    bl_idname = 'uvcs.checkin'
     bl_label = 'Checkin'
     bl_description = 'Submit checkin with the current changes'
 
@@ -15,7 +15,7 @@ class PLASTIC_OT_checkin(Operator):
         return client.has_changes_available()
 
     def execute(self, context):
-        panel_settings = common.get_plastic_context(context)
+        panel_settings = common.get_uvcs_context(context)
 
         comment_lines = []
 
@@ -34,28 +34,28 @@ class PLASTIC_OT_checkin(Operator):
 
         return {'FINISHED'}
 
-class PLASTIC_OT_add_comment_line(Operator):
-    bl_idname = 'plastic.add_comment_line'
+class UVCS_OT_add_comment_line(Operator):
+    bl_idname = 'uvcs.add_comment_line'
     bl_label = 'Add line'
     bl_description = 'Add a new comment line'
 
     def execute(self, context):
-        panel_settings = common.get_plastic_context(context)
+        panel_settings = common.get_uvcs_context(context)
 
         comment_line = panel_settings.checkin_comments.add()
         comment_line.line = ''
 
         return {'FINISHED'}
 
-class PLASTIC_OT_remove_comment_line(Operator):
-    bl_idname = 'plastic.remove_comment_line'
+class UVCS_OT_remove_comment_line(Operator):
+    bl_idname = 'uvcs.remove_comment_line'
     bl_label = 'Remove line'
     bl_description = 'Remove this comment line'
 
     index: IntProperty()
 
     def execute(self, context):
-        panel_settings = common.get_plastic_context(context)
+        panel_settings = common.get_uvcs_context(context)
 
         if len(panel_settings.checkin_comments) >= (self.index + 1):
             panel_settings.checkin_comments.remove(self.index)
@@ -64,11 +64,11 @@ class PLASTIC_OT_remove_comment_line(Operator):
 
 
 def register():
-    bpy.utils.register_class(PLASTIC_OT_checkin)
-    bpy.utils.register_class(PLASTIC_OT_add_comment_line)
-    bpy.utils.register_class(PLASTIC_OT_remove_comment_line)
+    bpy.utils.register_class(UVCS_OT_checkin)
+    bpy.utils.register_class(UVCS_OT_add_comment_line)
+    bpy.utils.register_class(UVCS_OT_remove_comment_line)
 
 def unregister():
-    bpy.utils.unregister_class(PLASTIC_OT_checkin)
-    bpy.utils.unregister_class(PLASTIC_OT_add_comment_line)
-    bpy.utils.unregister_class(PLASTIC_OT_remove_comment_line)
+    bpy.utils.unregister_class(UVCS_OT_checkin)
+    bpy.utils.unregister_class(UVCS_OT_add_comment_line)
+    bpy.utils.unregister_class(UVCS_OT_remove_comment_line)

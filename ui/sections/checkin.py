@@ -1,4 +1,4 @@
-from ...plastic import client
+from ...uvcs import client
 
 def draw(layout, panel_settings):
     row = layout.row()
@@ -23,14 +23,14 @@ def draw(layout, panel_settings):
             row.prop(comment_line, 'line', text='', translate=False)
 
             if comment_index == (len(comments) - 1):
-                row.operator('plastic.add_comment_line', text='', icon='ADD', translate=False)
+                row.operator('uvcs.add_comment_line', text='', icon='ADD', translate=False)
 
                 if comment_index != 0:
-                    row.operator('plastic.remove_comment_line', text='', icon='PANEL_CLOSE', translate=False).index = comment_index
+                    row.operator('uvcs.remove_comment_line', text='', icon='PANEL_CLOSE', translate=False).index = comment_index
             else:
-                row.operator('plastic.remove_comment_line', text='', icon='PANEL_CLOSE', translate=False).index = comment_index
+                row.operator('uvcs.remove_comment_line', text='', icon='PANEL_CLOSE', translate=False).index = comment_index
 
         row = box.row()
 
-        row.operator('plastic.checkin', text='Checkin', icon='EXPORT', translate=False)
-        row.operator('plastic.undo', text='Undo changes', icon='LOOP_BACK', translate=False)
+        row.operator('uvcs.checkin', text='Checkin', icon='EXPORT', translate=False)
+        row.operator('uvcs.undo', text='Undo changes', icon='LOOP_BACK', translate=False)

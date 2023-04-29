@@ -2,10 +2,10 @@ import bpy
 from bpy.types import Operator
 
 from ... import common
-from ...plastic import client
+from ...uvcs import client
 
-class PLASTIC_OT_undo(Operator):
-    bl_idname = 'plastic.undo'
+class UVCS_OT_undo(Operator):
+    bl_idname = 'uvcs.undo'
     bl_label = 'Undo changes'
     bl_description = 'Undo the current changes'
 
@@ -25,7 +25,7 @@ class PLASTIC_OT_undo(Operator):
 
 
 def register():
-    bpy.utils.register_class(PLASTIC_OT_undo)
+    bpy.utils.register_class(UVCS_OT_undo)
 
 def unregister():
-    bpy.utils.unregister_class(PLASTIC_OT_undo)
+    bpy.utils.unregister_class(UVCS_OT_undo)

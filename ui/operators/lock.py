@@ -2,10 +2,10 @@ import bpy
 from bpy.types import Operator
 
 from ... import common
-from ...plastic import client
+from ...uvcs import client
 
-class PLASTIC_OT_lock(Operator):
-    bl_idname = 'plastic.lock'
+class UVCS_OT_lock(Operator):
+    bl_idname = 'uvcs.lock'
     bl_label = 'Lock'
     bl_description = 'Lock the current file'
 
@@ -20,8 +20,8 @@ class PLASTIC_OT_lock(Operator):
 
         return {'FINISHED'}
 
-class PLASTIC_OT_unlock(Operator):
-    bl_idname = 'plastic.unlock'
+class UVCS_OT_unlock(Operator):
+    bl_idname = 'uvcs.unlock'
     bl_label = 'Unlock'
     bl_description = 'Remove the current lock'
 
@@ -35,9 +35,9 @@ class PLASTIC_OT_unlock(Operator):
 
 
 def register():
-    bpy.utils.register_class(PLASTIC_OT_lock)
-    bpy.utils.register_class(PLASTIC_OT_unlock)
+    bpy.utils.register_class(UVCS_OT_lock)
+    bpy.utils.register_class(UVCS_OT_unlock)
 
 def unregister():
-    bpy.utils.unregister_class(PLASTIC_OT_lock)
-    bpy.utils.unregister_class(PLASTIC_OT_unlock)
+    bpy.utils.unregister_class(UVCS_OT_lock)
+    bpy.utils.unregister_class(UVCS_OT_unlock)

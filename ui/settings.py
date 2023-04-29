@@ -4,7 +4,7 @@ from bpy.props import BoolProperty, CollectionProperty, EnumProperty, StringProp
 import os
 
 from .. import common
-from ..plastic import client
+from ..uvcs import client
 
 class CommentLine(bpy.types.PropertyGroup):
     line: StringProperty(
@@ -12,7 +12,7 @@ class CommentLine(bpy.types.PropertyGroup):
         description='Keeping track of your changes is one of the greatest advantages of version control systems'
     )
 
-class PlasticPanelSettings(PropertyGroup):
+class UVCSPanelSettings(PropertyGroup):
     def __get_branches(self, context):
         branches = []
 
@@ -26,8 +26,8 @@ class PlasticPanelSettings(PropertyGroup):
 
         return branches
 
-    def __update_branch(plastic_context, self):
-        selected_branch = plastic_context.branches
+    def __update_branch(uvcs_context, self):
+        selected_branch = uvcs_context.branches
 
         if selected_branch != '-' and selected_branch != client.get_active_branch():
             switch_error_log = client.switch_to_branch(selected_branch)
@@ -71,14 +71,14 @@ class PlasticPanelSettings(PropertyGroup):
 
 def register():
     bpy.utils.register_class(CommentLine)
-    bpy.utils.register_class(PlasticPanelSettings)
+    bpy.utils.register_class(UVCSPanelSettings)
 
-    if not hasattr(bpy.types.WindowManager, 'plastic_context'):
-        setattr(bpy.types.WindowManager, 'plastic_context', bpy.props.PointerProperty(type=PlasticPanelSettings))
+    if not hasattr(bpy.types.WindowManager, 'uvcs_context'):
+        setattr(bpy.types.WindowManager, 'uvcs_context', bpy.props.PointerProperty(type=UVCSPanelSettings))
 
 def unregister():
-    if hasattr(bpy.types.WindowManager, 'plastic_context'):
-        delattr(bpy.types.WindowManager, 'plastic_context')
+    if hasattr(bpy.types.WindowManager, 'uvcs_context'):
+        delattr(bpy.types.WindowManager, 'uvcs_context')
 
     bpy.utils.unregister_class(CommentLine)
-    bpy.utils.unregister_class(PlasticPanelSettings)
+    bpy.utils.unregister_class(UVCSPanelSettings)

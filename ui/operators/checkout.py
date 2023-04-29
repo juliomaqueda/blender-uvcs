@@ -2,10 +2,10 @@ import bpy
 from bpy.types import Operator
 
 from ... import common
-from ...plastic import client
+from ...uvcs import client
 
-class PLASTIC_OT_checkout(Operator):
-    bl_idname = 'plastic.checkout'
+class UVCS_OT_checkout(Operator):
+    bl_idname = 'uvcs.checkout'
     bl_label = 'Checkout'
     bl_description = 'Checkout the file'
 
@@ -23,7 +23,7 @@ class PLASTIC_OT_checkout(Operator):
 
 
 def register():
-    bpy.utils.register_class(PLASTIC_OT_checkout)
+    bpy.utils.register_class(UVCS_OT_checkout)
 
 def unregister():
-    bpy.utils.unregister_class(PLASTIC_OT_checkout)
+    bpy.utils.unregister_class(UVCS_OT_checkout)

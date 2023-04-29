@@ -1,7 +1,7 @@
 import bpy
 import ntpath
 
-from ...plastic import client
+from ...uvcs import client
 
 def draw(layout, panel_settings):
     row = layout.row()
@@ -19,7 +19,7 @@ def draw(layout, panel_settings):
         row.label(text='Status: ' + client.get_status(), translate=False)
 
         if client.is_private():
-            row.operator('plastic.add', text='Add', icon='ADD', translate=False)
+            row.operator('uvcs.add', text='Add', icon='ADD', translate=False)
 
         row = box.row()
         row.alignment = 'LEFT'

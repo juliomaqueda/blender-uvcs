@@ -17,7 +17,7 @@ class CommandResult():
 def execute(params, newline_separator = None):
     try:
         if __cm_shell_process is None:
-            __initialize_plastic_shell()
+            __initialize_uvcs_shell()
 
         cm_command = ' '.join(params) + "\n"
 
@@ -45,7 +45,7 @@ def execute(params, newline_separator = None):
     except BaseException as ex:
         return CommandResult(False, ['Couldn\'t execute command ' + __cm_command_path])
 
-def __initialize_plastic_shell():
+def __initialize_uvcs_shell():
     global __cm_shell_process
 
     __cm_shell_process = subprocess.Popen(

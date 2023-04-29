@@ -1,4 +1,4 @@
-from ...plastic import client
+from ...uvcs import client
 
 def draw(layout, panel_settings):
     row = layout.row()
@@ -20,9 +20,9 @@ def draw(layout, panel_settings):
 
         row = box.row()
 
-        row.operator('plastic.checkout', text='Checkout' if not client.is_checked_out() else 'Checked-out', icon='IMPORT', translate=False)
+        row.operator('uvcs.checkout', text='Checkout' if not client.is_checked_out() else 'Checked-out', icon='IMPORT', translate=False)
 
         if client.get_lock_owner() is not None:
-            row.operator('plastic.unlock', text='Unlock', icon='UNLOCKED', translate=False)
+            row.operator('uvcs.unlock', text='Unlock', icon='UNLOCKED', translate=False)
         else:
-            row.operator('plastic.lock', text='Lock', icon='LOCKED', translate=False)
+            row.operator('uvcs.lock', text='Lock', icon='LOCKED', translate=False)

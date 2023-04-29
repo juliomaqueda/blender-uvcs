@@ -3,9 +3,9 @@ import os
 
 __preview_collections = {}
 
-__PLASTIC_ICONS = {
-    'LOGO_PLASTIC': 'icon_plastic.png',
-    'LOGO_PLASTIC_CHANGES': 'icon_plastic_notify.png',
+__UVCS_ICONS = {
+    'LOGO_UVCS': 'icon_devops.png',
+    'LOGO_UVCS_CHANGES': 'icon_devops_notify.png',
 
     'LOGO_UNITY': 'icon_unity.png',
 
@@ -14,21 +14,21 @@ __PLASTIC_ICONS = {
 }
 
 def get_icon(name):
-    plastic_icons = __preview_collections['plastic_icons']
-    icon = plastic_icons.get(name)
+    uvcs_icons = __preview_collections['uvcs_icons']
+    icon = uvcs_icons.get(name)
     return icon.icon_id if icon else 0
 
 
 def register():
-    plastic_icons = bpy.utils.previews.new()
-    __preview_collections['plastic_icons'] = plastic_icons
+    uvcs_icons = bpy.utils.previews.new()
+    __preview_collections['uvcs_icons'] = uvcs_icons
 
-    for name, filename in __PLASTIC_ICONS.items():
+    for name, filename in __UVCS_ICONS.items():
         icon_path = os.path.join(os.path.dirname(__file__), filename)
-        plastic_icons.load(name, icon_path, 'IMAGE')
+        uvcs_icons.load(name, icon_path, 'IMAGE')
 
 def unregister():
-    for plastic_icons in __preview_collections.values():
-        bpy.utils.previews.remove(plastic_icons)
+    for uvcs_icons in __preview_collections.values():
+        bpy.utils.previews.remove(uvcs_icons)
 
     __preview_collections.clear()

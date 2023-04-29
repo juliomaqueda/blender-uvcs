@@ -3,10 +3,10 @@ from bpy.types import Operator
 from bpy.props import StringProperty
 
 from ... import common
-from ...plastic import client
+from ...uvcs import client
 
-class PLASTIC_OT_update(Operator):
-    bl_idname = 'plastic.update'
+class UVCS_OT_update(Operator):
+    bl_idname = 'uvcs.update'
     bl_label = 'Update'
     bl_description = 'Update to latest version'
 
@@ -24,8 +24,8 @@ class PLASTIC_OT_update(Operator):
 
         return {'FINISHED'}
 
-class PLASTIC_OT_changeset_details(Operator):
-    bl_idname = 'plastic.changeset_details'
+class UVCS_OT_changeset_details(Operator):
+    bl_idname = 'uvcs.changeset_details'
     bl_label = 'Show changeset details'
     bl_description = 'Get detailed information about this changeset'
 
@@ -61,9 +61,9 @@ class PLASTIC_OT_changeset_details(Operator):
 
 
 def register():
-    bpy.utils.register_class(PLASTIC_OT_update)
-    bpy.utils.register_class(PLASTIC_OT_changeset_details)
+    bpy.utils.register_class(UVCS_OT_update)
+    bpy.utils.register_class(UVCS_OT_changeset_details)
 
 def unregister():
-    bpy.utils.unregister_class(PLASTIC_OT_update)
-    bpy.utils.unregister_class(PLASTIC_OT_changeset_details)
+    bpy.utils.unregister_class(UVCS_OT_update)
+    bpy.utils.unregister_class(UVCS_OT_changeset_details)

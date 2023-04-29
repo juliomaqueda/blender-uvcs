@@ -9,12 +9,12 @@ from .sections import fileinfo as fileinfo_section
 from .sections import history as history_section
 from .sections import update as update_section
 from .. import common
-from ..plastic import client
+from ..uvcs import client
 
-class PLASTIC_OT_panel_popup(Operator):
-    bl_idname = 'plastic.panel_popup'
-    bl_label = 'PlasticSCM Version Control Panel'
-    bl_description = 'Open the version control panel for PlasticSCM'
+class UVCS_OT_panel_popup(Operator):
+    bl_idname = 'uvcs.panel_popup'
+    bl_label = 'Unity Version Control'
+    bl_description = 'Open the version control panel'
 
     def invoke(self, context, event):
         client.clear_cache()
@@ -28,15 +28,15 @@ class PLASTIC_OT_panel_popup(Operator):
 
     def draw(self, context):
         if not client.is_connected():
-            common.show_error_message('Connection to PlasticSCM failed', ['Couldn\'t connect to the PlasticSCM server. Check your credentials and try again'])
+            common.show_error_message('Connection to Unity Version Control failed', ['Couldn\'t connect to the Unity Version Control server. Check your credentials and try again'])
             return
 
-        panel_settings = common.get_plastic_context(context)
+        panel_settings = common.get_uvcs_context(context)
 
         layout = self.layout
 
         # Header
-        layout.label(text='PlasticSCM version control', icon_value=icons.get_icon('LOGO_PLASTIC'), translate=False)
+        layout.label(text='Unity Version Control', icon_value=icons.get_icon('LOGO_UVCS'), translate=False)
 
         # Sections
         fileinfo_section.draw(layout, panel_settings)
@@ -58,14 +58,14 @@ class PLASTIC_OT_panel_popup(Operator):
         col = row.split()
         col.alignment = 'RIGHT'
         col.enabled = False
-        col.label(text='PlasticSCM is a product powered by Unity', translate=False)
-        row.operator('plastic.open_unity_documentation', text='', icon_value=icons.get_icon('LOGO_UNITY'), emboss=False, translate=False)
+        col.label(text='Unity Version Control is a product by Unity', translate=False)
+        row.operator('uvcs.open_unity_documentation', text='', icon_value=icons.get_icon('LOGO_UNITY'), emboss=False, translate=False)
 
     def execute(self, context):
         return {'INTERFACE'}
 
     def __reset_settings(self, context):
-        panel_settings = common.get_plastic_context(context)
+        panel_settings = common.get_uvcs_context(context)
         panel_settings.info_menu_active = True
         panel_settings.pending_changes_menu_active = client.has_changes_available()
         panel_settings.incoming_changes_menu_active = client.has_incoming_changes()
@@ -76,7 +76,7 @@ class PLASTIC_OT_panel_popup(Operator):
 
 
 def register():
-    bpy.utils.register_class(PLASTIC_OT_panel_popup)
+    bpy.utils.register_class(UVCS_OT_panel_popup)
 
 def unregister():
-    bpy.utils.unregister_class(PLASTIC_OT_panel_popup)
+    bpy.utils.unregister_class(UVCS_OT_panel_popup)

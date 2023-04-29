@@ -1,5 +1,5 @@
 from .. import icons
-from ...plastic import client
+from ...uvcs import client
 
 def draw(layout, panel_settings):
     row = layout.row()
@@ -24,7 +24,7 @@ def draw(layout, panel_settings):
         col.separator()
         row = col.row(align=True)
         row.prop(panel_settings, 'new_branch_name', text='', translate=False)
-        row.operator('plastic.create_branch', text='', icon_value=icons.get_icon('CREATE'), translate=False)
+        row.operator('uvcs.create_branch', text='', icon_value=icons.get_icon('CREATE'), translate=False)
         col.separator()
         row = col.row()
 

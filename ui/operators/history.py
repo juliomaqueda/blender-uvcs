@@ -2,10 +2,10 @@ import bpy
 from bpy.types import Operator
 
 from ... import common
-from ...plastic import client
+from ...uvcs import client
 
-class PLASTIC_OT_reload_history(Operator):
-    bl_idname = 'plastic.reload_history'
+class UVCS_OT_reload_history(Operator):
+    bl_idname = 'uvcs.reload_history'
     bl_label = 'Reload history'
     bl_description = 'Reload the history for this file'
 
@@ -21,7 +21,7 @@ class PLASTIC_OT_reload_history(Operator):
 
 
 def register():
-    bpy.utils.register_class(PLASTIC_OT_reload_history)
+    bpy.utils.register_class(UVCS_OT_reload_history)
 
 def unregister():
-    bpy.utils.unregister_class(PLASTIC_OT_reload_history)
+    bpy.utils.unregister_class(UVCS_OT_reload_history)

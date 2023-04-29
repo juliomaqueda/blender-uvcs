@@ -1,16 +1,16 @@
 import bpy
 
 from . import icons
-from ..plastic import client
+from ..uvcs import client
 
 __draw_right_builtin = None
 
 def draw_right(self, context):
     if client.is_connected():
-        icon_name = 'LOGO_PLASTIC_CHANGES' if client.has_changes_available() == True else 'LOGO_PLASTIC'
+        icon_name = 'LOGO_UVCS_CHANGES' if client.has_changes_available() == True else 'LOGO_UVCS'
 
         row = self.layout.row(align=True)
-        row.operator('plastic.panel_popup', text='', icon_value=icons.get_icon(icon_name), emboss=False, translate=False)
+        row.operator('uvcs.panel_popup', text='', icon_value=icons.get_icon(icon_name), emboss=False, translate=False)
 
     __draw_right_builtin(self, context)
 

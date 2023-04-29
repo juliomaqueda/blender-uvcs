@@ -1,4 +1,4 @@
-from ...plastic import client
+from ...uvcs import client
 
 def draw(layout, panel_settings):
     row = layout.row()
@@ -31,7 +31,7 @@ def draw(layout, panel_settings):
 
                     row.label(text=incoming_change_entry.owner, translate=False)
 
-                    op = row.operator('plastic.changeset_details', text='', icon='HIDE_OFF', emboss=False, translate=False)
+                    op = row.operator('uvcs.changeset_details', text='', icon='HIDE_OFF', emboss=False, translate=False)
                     op.date = incoming_change_entry.date
                     op.owner = incoming_change_entry.owner
                     op.branch = incoming_change_entry.branch
@@ -44,4 +44,4 @@ def draw(layout, panel_settings):
 
         row = box.row()
         row.prop(panel_settings, 'show_incoming_changes', text='View changes', icon='HIDE_OFF', translate=False)
-        row.operator('plastic.update', text='Update', icon='IMPORT', translate=False)
+        row.operator('uvcs.update', text='Update', icon='IMPORT', translate=False)

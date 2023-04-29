@@ -1,5 +1,5 @@
 from .. import icons
-from ...plastic import client
+from ...uvcs import client
 
 def draw(layout, panel_settings):
     row = layout.row()
@@ -21,7 +21,7 @@ def draw(layout, panel_settings):
 
                 row.label(text=history_entry.owner, translate=False)
 
-                op = row.operator('plastic.changeset_details', text='', icon='HIDE_OFF', emboss=False, translate=False)
+                op = row.operator('uvcs.changeset_details', text='', icon='HIDE_OFF', emboss=False, translate=False)
                 op.date = history_entry.date
                 op.owner = history_entry.owner
                 op.branch = history_entry.branch
@@ -34,5 +34,5 @@ def draw(layout, panel_settings):
 
         row = layout.row()
         row.alignment = 'RIGHT'
-        row.operator('plastic.reload_history', text='Reload history', icon_value=icons.get_icon('REFRESH'), emboss=False, translate=False)
+        row.operator('uvcs.reload_history', text='Reload history', icon_value=icons.get_icon('REFRESH'), emboss=False, translate=False)
 

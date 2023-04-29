@@ -3,20 +3,20 @@ from bpy.types import Operator
 import os
 
 from ... import common
-from ...plastic import client
+from ...uvcs import client
 
-class PLASTIC_OT_create_branch(Operator):
-    bl_idname = 'plastic.create_branch'
+class UVCS_OT_create_branch(Operator):
+    bl_idname = 'uvcs.create_branch'
     bl_label = 'Create branch'
     bl_description = 'Create a new branch with the supplied name'
 
     @classmethod
     def poll(cls, context):
-        panel_settings = common.get_plastic_context(context)
+        panel_settings = common.get_uvcs_context(context)
         return panel_settings.new_branch_name != ''
 
     def execute(self, context):
-        panel_settings = common.get_plastic_context(context)
+        panel_settings = common.get_uvcs_context(context)
         is_child_branch = panel_settings.is_child_branch
         branch_name = panel_settings.new_branch_name if not is_child_branch else client.get_active_branch() + '/' + panel_settings.new_branch_name
 
@@ -45,7 +45,7 @@ class PLASTIC_OT_create_branch(Operator):
 
 
 def register():
-    bpy.utils.register_class(PLASTIC_OT_create_branch)
+    bpy.utils.register_class(UVCS_OT_create_branch)
 
 def unregister():
-    bpy.utils.unregister_class(PLASTIC_OT_create_branch)
+    bpy.utils.unregister_class(UVCS_OT_create_branch)

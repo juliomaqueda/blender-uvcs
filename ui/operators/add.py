@@ -2,10 +2,10 @@ import bpy
 from bpy.types import Operator
 
 from ... import common
-from ...plastic import client
+from ...uvcs import client
 
-class PLASTIC_OT_add(Operator):
-    bl_idname = 'plastic.add'
+class UVCS_OT_add(Operator):
+    bl_idname = 'uvcs.add'
     bl_label = 'Add file to source control'
     bl_description = 'Add file to source control'
 
@@ -23,7 +23,7 @@ class PLASTIC_OT_add(Operator):
 
 
 def register():
-    bpy.utils.register_class(PLASTIC_OT_add)
+    bpy.utils.register_class(UVCS_OT_add)
 
 def unregister():
-    bpy.utils.unregister_class(PLASTIC_OT_add)
+    bpy.utils.unregister_class(UVCS_OT_add)

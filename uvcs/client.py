@@ -20,7 +20,7 @@ def is_connected():
 
         addon_preferences = common.get_addon_preferences(bpy.context)
 
-        set_cm_location(addon_preferences.plastic_cm_path)
+        set_cm_location(addon_preferences.uvcs_cm_path)
 
         if bpy.data.filepath != '':
             refresh_status()

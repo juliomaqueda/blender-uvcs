@@ -1,12 +1,12 @@
 import bpy
 
-ADDON_NAME = 'blender-plasticscm'
+ADDON_NAME = 'blender-uvcs'
 
 def get_addon_preferences(context):
     return context.preferences.addons[ADDON_NAME].preferences
 
-def get_plastic_context(context):
-    return context.window_manager.plastic_context
+def get_uvcs_context(context):
+    return context.window_manager.uvcs_context
 
 def show_info_message(title, messages):
     __show_message(title, messages, 'INFO')
@@ -18,7 +18,7 @@ def show_error_message(title, messages):
     __show_message(title, messages, 'CANCEL')
 
 def show_error_log(title, message, log):
-    messages = [message, ' ', 'PlasticSCM output:']
+    messages = [message, ' ', 'Unity Version Control output:']
 
     for log_line in log:
         messages.append('> ' + log_line)
