@@ -36,7 +36,7 @@ class UVCS_OT_panel_popup(Operator):
         layout = self.layout
 
         # Header
-        layout.label(text='Unity Version Control', icon_value=icons.get_icon('LOGO_UVCS'), translate=False)
+        layout.label(text='Unity Version Control', icon_value=icons.get_icon('LOGO_VERSION_CONTROL'), translate=False)
 
         # Sections
         fileinfo_section.draw(layout, panel_settings)
@@ -55,11 +55,9 @@ class UVCS_OT_panel_popup(Operator):
 
         # Footer
         row = layout.row(align=True)
-        col = row.split()
-        col.alignment = 'RIGHT'
-        col.enabled = False
-        col.label(text='Unity Version Control is a product by Unity', translate=False)
-        row.operator('uvcs.open_unity_documentation', text='', icon_value=icons.get_icon('LOGO_UNITY'), emboss=False, translate=False)
+        row.alignment = 'RIGHT'
+        row.enabled = False
+        row.label(text='Created by the Unity community', translate=False)
 
     def execute(self, context):
         return {'INTERFACE'}

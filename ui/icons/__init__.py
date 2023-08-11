@@ -4,11 +4,8 @@ import os
 __preview_collections = {}
 
 __UVCS_ICONS = {
-    'LOGO_UVCS': 'icon_devops.png',
-    'LOGO_UVCS_CHANGES': 'icon_devops_notify.png',
-
-    'LOGO_UNITY': 'icon_unity.png',
-
+    'LOGO_VERSION_CONTROL': 'icons_version_control.png',
+    'LOGO_VERSION_CONTROL_CHANGES': 'icons_version_control_notify.png',
     'CREATE': 'icon_create.png',
     'REFRESH': 'icon_refresh.png'
 }

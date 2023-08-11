@@ -7,7 +7,7 @@ __draw_right_builtin = None
 
 def draw_right(self, context):
     if client.is_connected():
-        icon_name = 'LOGO_UVCS_CHANGES' if client.has_changes_available() == True else 'LOGO_UVCS'
+        icon_name = 'LOGO_VERSION_CONTROL_CHANGES' if client.has_changes_available() == True else 'LOGO_VERSION_CONTROL'
 
         row = self.layout.row(align=True)
         row.operator('uvcs.panel_popup', text='', icon_value=icons.get_icon(icon_name), emboss=False, translate=False)
