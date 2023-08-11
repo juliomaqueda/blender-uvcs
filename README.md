@@ -34,7 +34,7 @@ In case you have an older version of the add-on installed, you may want to deact
 
 ## Getting Started
 
-When the [blender-uvcs](https://github.com/juliomaqueda/blender-uvcs) add-on is enabled, it will automatically detect if the current file belongs to a Unity Version Control workspace. If so, a new icon in the toolbar <img src="documentation/icon_devops.png" width="14px" /> will show up to access Unity Version Control [features](#features).
+When the [blender-uvcs](https://github.com/juliomaqueda/blender-uvcs) add-on is enabled, it will automatically detect if the current file belongs to a Unity Version Control workspace. If so, a new icon (<img src="documentation/icon_version_control.png" width="14px" />) will show up in the toolbar to access Unity Version Control [features](#features).
 
 A special effort has been made to achieve user friendly interfaces. You will see tooltips around for almost all components, as well as information messages for operations. In case an invalid operation is attempted, you will be prompted with the process log to facilitate triage.
 
