@@ -99,6 +99,7 @@ def checkin(comment):
     checkin_error_log = checkin_operations.checkin(comment)
 
     if checkin_error_log is None:
+        checkout_operations.clear_cache()
         history_operations.clear_cache()
         refresh_file_info()
 
@@ -126,7 +127,7 @@ def checkout():
 
     return checkout_error_log
 
-def get_lock_owner(): return checkout_operations.get_lock_owner()
+def get_lock_info(): return checkout_operations.get_lock_info()
 
 def unlock(): return checkout_operations.unlock()
 

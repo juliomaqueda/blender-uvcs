@@ -13,7 +13,7 @@ class UVCS_OT_lock(Operator):
         checkout_error_log = client.checkout()
 
         if checkout_error_log is None:
-            if client.get_lock_owner() is None:
+            if client.get_lock_info() is None:
                 common.show_error_message('Lock failed', ['The current file doesn\'t meet the locking criteria.'])
         else:
             common.show_error_log('Checkout failed', 'It was not possible to checkout the file.', checkout_error_log)

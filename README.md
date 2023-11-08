@@ -11,8 +11,8 @@ This add-on integrates the essentials of Unity Version Control into Blender, let
 
 ## Requirements
 
-* [Blender](https://www.blender.org/download/) >= 2.8.0 (last tested with 3.3.1 LTS)
-* [Unity Version Control](https://www.plasticscm.com/download)
+* [Blender](https://www.blender.org/download/) >= 2.8.0 (tested up to 3.6.5 LTS)
+* [Unity Version Control](https://www.plasticscm.com/download) >= 11.0.16.8101
 
 > ℹ️ &nbsp; The add-on will use your local configuration of Unity Version Control automatically, no matter if you connect to an on-premise server or if you have a [cloud subscription](https://service-store.unity.com/order) _(**first 3 seats and 5 GB are free**)_.
 
@@ -73,9 +73,9 @@ Checking out files is the way to tell the Unity Version Control server your inte
 
 ### Lock / unlock
 
-Depending on the server configuration, your checkout operations may entail exclusive locks on the involved files.
+Depending on the server configuration, your checkout operations may entail exclusive locks.
 
-This capability will allow you to easily lock and unlock files, while informing you of the current lock owner (if any).
+This functionality empowers you to effortlessly manage file locks, providing real-time updates on the lock status, if applicable.
 
 ### Create new branches
 
