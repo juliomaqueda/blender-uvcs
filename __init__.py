@@ -2,7 +2,7 @@ bl_info = {
     'name': 'Unity Version Control',
     'description': 'Integration with Unity version control system',
     'author': 'Julio Maqueda (@juliomaqueda)',
-    'version': (0, 1, 5),
+    'version': (0, 1, 6),
     'blender': (2, 80, 0),
     'location': 'Topbar / Sidebar -> Unity version contol',
     'warning': '',
